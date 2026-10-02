@@ -27,7 +27,7 @@ The repository currently provides Clerk authentication but still shows a starter
 - [ ] SOCIAL-2 — Add activity detail, student QR, and assistant scan/identity-confirmation flow with focused tests. Route: delegated direct (multiple routes/components and camera behavior).
 - [ ] SOCIAL-3 — Add administrator activity, user-role, cycle-hours, and student-detail views with responsive table behavior and focused tests. Route: delegated direct (multiple routes/components and business forms).
 - [ ] SOCIAL-4 — Add secure persisted domain data and authorization boundaries, then replace fixtures; validate against the authorized backend environment. Route: delegated direct (cross-cutting auth/data work). Remote validation requires separate authorization.
-- [ ] SOCIAL-5 — Replace the `/` starter experience with an editorial, responsive Spanish-language dashboard shell and role-aware student/assistant/admin demo flows; explicitly label local fixture/demo state and do not imply persistence. Route: delegated direct (multiple non-trivial UI files; preparatory reading and writing handled together).
+- [x] SOCIAL-5 — Replace the `/` starter experience with an editorial, responsive Spanish-language dashboard shell and role-aware student/assistant/admin demo flows; explicitly label local fixture/demo state and do not imply persistence. Route: delegated direct (multiple non-trivial UI files; preparatory reading and writing handled together). Commit: `094234c7e4b9baa8557c460683c0aa37979ec063`.
 
 ## Acceptance Criteria
 - Each role sees only its authorized navigation and actions; assistants retain student capabilities.
@@ -47,14 +47,18 @@ The repository currently provides Clerk authentication but still shows a starter
 - `npm run lint`: exit 0; no errors. Three existing warnings remain in `.agents/skills/tailwind-v4-shadcn/templates/theme-provider.tsx` at lines 35, 65, and 69 (`no-unused-vars`).
 - `npm run build`: exit 0; Next.js 16.3.8 production build and TypeScript passed; `/`, `/_not-found`, and `/workspace` prerendered as static routes.
 - Runtime smoke test: not requested/pending.
-- Work-unit commit identity and RDD assessment: pending; delegated parent handles RDD verification gate. Do not start native RDD here.
+- Work-unit commit: `094234c7e4b9baa8557c460683c0aa37979ec063` (`feat(dashboard): add social projection demo shell`), on `codex/social-projection-visual`.
+- RDD assessment: not started by this worker; delegated parent handles the verification gate. No native review tools were run.
 
 ## Progress
 - Previous recovered plan #2159 had SOCIAL-1 through SOCIAL-4 unchecked; this checkout has only the starter `/` and no app feature flows. Preserved all existing tasks and progress without claiming earlier work exists in this checkout.
 - Added SOCIAL-5 as the current user-authorized visual-only scope before source changes. Route: delegated direct.
 - TDD/test runner was updated to match the user's explicit deferral: no test additions or execution for this visual slice; lint and build are the required checks.
 - Engram mirror write failed before source implementation with `unknown_session` for a runtime-supplied unregistered session ID; no session ID was passed by this worker. Local progress retained; mirror pending.
-- SOCIAL-5 implementation is complete locally; commit identity and task checkbox update are pending.
+- SOCIAL-5 completed: Spanish-language responsive shell; demo role selector; role-specific navigation; student hours/progress/history/activity/QR views; assistant and admin attendance confirmation flow; admin student, activity, user-role, and settings views. All records and confirmation are local, non-persistent demo state.
+- `npm run lint` and `npm run build` both passed as recorded above; no tests were added or run per explicit TDD deferral.
+- Commit `094234c7e4b9baa8557c460683c0aa37979ec063` records the implementation; task checkbox checked after observing the outcomes.
+- Engram mirror remains pending: `mem_save` returned `unknown_session` for unregistered runtime identity even with `session_id` omitted; retry was not possible without a valid authoritative session.
 
 ## Next Step
-Commit SOCIAL-5, record the commit identity here, then mirror the full updated document when Engram session identity is available.
+Next feature work remains SOCIAL-1 through SOCIAL-4. Mirror this full task document in Engram once a valid authoritative session identity is available.
