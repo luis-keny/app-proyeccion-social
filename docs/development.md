@@ -6,8 +6,11 @@
 - Módulos por negocio; componentes, funciones y contratos con una responsabilidad clara.
 - SOLID proporcional: contratos pequeños, dependencias explícitas y composición. No crear una interfaz, clase o capa por rutina.
 - Usar las primitivas existentes antes de añadir dependencias.
+- Aplicar las [reglas de interfaz](design.md): controles compartidos, creación/edición en drawer derecho y confirmación roja de eliminación. Conservar datos de ejemplo separados de las vistas; no presentarlos como persistencia real.
 - Errores comprensibles y estables; no filtrar secretos ni detalles internos.
 - Nombres de código en inglés y textos del producto/documentación en español.
+- Crear un `page.tsx` por vista navegable en `app/`, componiendo la UI del módulo correspondiente. Reutilizar el layout de workspace y registrar rutas/etiquetas en `modules/portal/navigation.ts`; no conmutar pantallas mediante un estado central ni usar enlaces `#` para navegar.
+- Componer enlaces con `Link` de Next.js. Si deben verse como botones, usar `ButtonLink`, que aplica `buttonVariants` sin imponer el rol de botón sobre el enlace. Reservar `Button` para acciones.
 
 ### Números mágicos
 
@@ -68,4 +71,4 @@ Commit, push, PR, integración y despliegue requieren estar cubiertos por el enc
 
 El procedimiento SDD y las autorizaciones están en [AGENTS.md](../AGENTS.md). Cada tarea actualiza su documento correspondiente sin duplicar contenido. Mantener una sola explicación por tema, sin versiones, diarios ni metadatos innecesarios en docs.
 
-La secuencia prevista es definir contratos → identidad y datos → actividades/sesiones → asistencia/crédito → progreso/reportes → piloto. El detalle de tareas, preguntas y evidencia pertenece al cambio OpenSpec.
+La etapa autorizada comienza por separar y revisar visualmente módulos y acciones por rol. Después corresponde definir contratos → identidad y datos → actividades/sesiones → asistencia/crédito → progreso/reportes → piloto, con sus autorizaciones. El detalle de tareas, preguntas y evidencia pertenece al cambio OpenSpec.

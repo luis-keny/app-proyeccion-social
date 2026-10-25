@@ -4,21 +4,31 @@
 
 Monolito Next.js con InsForge como base de datos PostgreSQL. La organización propuesta combina rutas de Next.js con módulos por capacidades de negocio: Screaming Architecture y responsabilidades internas guiadas por SOLID.
 
-La aplicación actual sigue siendo una demo en `app/` y `components/`. La estructura siguiente es el objetivo propuesto; esta reorganización documental no mueve código.
+El frontend ya separa la composición del portal y las vistas por capacidad en `modules/`. Los datos siguen en memoria. Las capas de dominio, aplicación e infraestructura son un objetivo posterior; no se crean carpetas vacías ni se considera implementado el backend.
 
 ```text
 app/                    # Rutas, layouts y composición
 modules/
-  identity/
-  activities/           # Incluye sesiones y recurrencia
-  attendance/           # Incluye crédito e historial
-  students/             # Perfil y progreso
-  reports/
+  portal/               # Navegación por rol y composición de vistas
+  activities/           # Modelo visual, fixtures, listado, editor y mapa
+  attendance/           # Vista de registro y ciclo de cámara/GPS
+  students/             # Vistas de progreso y QR de ejemplo
+  reports/              # Fixtures y vista de dashboard/reporte
 components/ui/          # Primitivas compartidas
 lib/                    # Utilidades e infraestructura transversal mínima
 ```
 
 Crear dentro de cada módulo solo lo necesario:
+
+`app/page.tsx` y `app/workspace/page.tsx` redirigen al progreso del estudiante. `app/workspace/layout.tsx` mantiene el proveedor de datos en memoria y el layout compartido, adaptado desde el scaffold de workspace: `SidebarProvider`, `AppSidebar`, `SidebarInset`, encabezado y breadcrumbs. Recibe las páginas como `children`; no selecciona su contenido con un estado de vista.
+
+Cada capacidad dispone de un `page.tsx` bajo `app/workspace/[role]/`: `progreso`, `actividades`, `mi-qr`, `asistencia`, `resumen` y `reportes`. El segmento de rol admite `estudiante`, `asistente` y `administrador`. Las páginas esperan los parámetros asíncronos de Next.js y validan la matriz visual antes de componer su vista. Combinaciones no disponibles presentan una página en español; no representan un sistema de autorización real.
+
+`modules/portal/navigation.ts` centraliza rutas, nombres, títulos y visibilidad. `Link` resuelve navegación y estado activo; cambiar de rol lleva a su vista inicial. `AppSidebar` recibe marca, navegación e identidad; `NavMain` recibe enlaces y grupos; `NavUser` recibe identidad y accesos existentes, sin acciones ficticias de cuenta o facturación.
+
+El proveedor de workspace conserva actividades y selección al navegar entre vistas o roles y usar el historial del navegador. Recargar reinicia los fixtures. Cada vista conserva sus filtros y estado transitorio solo mientras está montada. Actividades usa identificadores estables, editor en Drawer derecho y AlertDialog para eliminar. Asistencia libera la cámara al salir o cambiar de actividad y muestra estado vacío si no quedan registros. Reportes conserva su presentación con fixtures separados.
+
+Los módulos futuros de identidad, sesiones/recurrencia y la integración real requieren definición específica. La navegación por rol es presentación; no sustituye permisos de servidor. Ver [diseño](design.md).
 
 | Área | Responsabilidad | Dependencias |
 |---|---|---|

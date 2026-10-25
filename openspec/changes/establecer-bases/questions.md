@@ -21,4 +21,4 @@ Estas decisiones condicionan la implementación. El humano aporta o valida las r
 
 Resolver primero identidad, ciclos, permisos y correcciones. Acordar también estado temporal cuando todas las sesiones se cancelan y entre sesiones de una serie.
 
-Monolito e InsForge están confirmados. Falta aceptar la estructura concreta de módulos, el mecanismo SDK/ORM y el modelo físico antes de implementarlos.
+Monolito e InsForge están confirmados. La separación de módulos visuales está autorizada en el [cambio de interfaz](../modularizar-interfaz-por-roles/review.md). El mecanismo SDK/ORM, modelo físico y capas de negocio/infraestructura siguen pendientes antes de implementarlos.

@@ -9,9 +9,11 @@ context: |
   Leer AGENTS.md, docs/README.md y las decisiones relacionadas.
   El humano acepta propuestas, autoriza alcance/entorno y acepta resultados.
   Registrar decisiones humanas en review.md; no repetir autorizaciones vigentes.
-  Etapa documental: no implementar backend ni mover código por iniciativa propia.
+  Etapa visual autorizada: separar componentes, vistas y módulos por rol.
+  Aplicar docs/design.md: controles compartidos, drawer derecho para crear/editar
+  y confirmación roja para eliminar. No implementar backend ni instalar dependencias.
   Documentación humana concisa, sin versiones ni diarios; historial en Git/OpenSpec.
-  Modelo de datos, estructura modular y mecanismo de acceso siguen propuestos.
+  Modelo de datos y mecanismo de acceso siguen propuestos; módulos de UI en implementación.
 
 rules:
   proposal:

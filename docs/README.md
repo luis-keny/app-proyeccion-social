@@ -4,6 +4,7 @@
 |---|---|
 | [Producto](product.md) | Alcance, actores y vocabulario |
 | [Arquitectura](architecture.md) | Módulos, responsabilidades y acceso a InsForge |
+| [Diseño de interfaz](design.md) | Controles, drawers, confirmaciones y matriz visual por rol |
 | [Base de datos](database.md) | Modelo, integridad, permisos y migraciones |
 | [Desarrollo](development.md) | Convenciones y comprobaciones |
 | [Operación](operations.md) | Entornos, despliegue y recuperación |
@@ -12,5 +13,7 @@
 Empieza por el [README del proyecto](../README.md). Las reglas de los agentes están en [AGENTS.md](../AGENTS.md).
 
 Los requisitos verificables pertenecen a OpenSpec. Mientras no haya especificaciones consolidadas, consulta el [cambio de bases](../openspec/changes/establecer-bases/proposal.md) y sus [preguntas pendientes](../openspec/changes/establecer-bases/questions.md).
+
+La primera implementación visual se sigue en [modularizar la interfaz por roles](../openspec/changes/modularizar-interfaz-por-roles/proposal.md). No existe todavía una baseline consolidada.
 
 Cada cambio mantiene actualizado el documento correspondiente. Usamos una sola ubicación por tema, enlaces entre documentos y nombres descriptivos. El historial queda en Git y OpenSpec; estos documentos explican el estado vigente, sin versiones ni diarios de cambios.

@@ -14,6 +14,8 @@ El usuario indicó Ship/Show/Ask como estrategia Git y reservó ramas o worktree
 
 No cubre migración del código, instalación de SDK/ORM, operaciones de backend, datos reales, push, PR ni despliegues. La estructura de módulos, mecanismo de acceso y modelo físico requieren aceptación específica antes de implementación.
 
+La autorización posterior para separar componentes, vistas y módulos visuales se registra en [review del cambio de interfaz](../modularizar-interfaz-por-roles/review.md). No amplía las autorizaciones de backend de este cambio.
+
 El usuario autorizó crear un commit local con todos los cambios pendientes mediante la instrucción «comitea todo».
 
 ## Resultado y cierre

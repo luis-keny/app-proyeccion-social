@@ -4,7 +4,9 @@ El sistema permite a estudiantes de UPeU consultar actividades de proyección so
 
 ## Estado actual
 
-Existe una demo con datos en memoria, selector de roles, cámara, mapa y reportes de ejemplo. Las cifras y metas mostradas no son reglas institucionales. Autenticación, persistencia y permisos reales aún no están verificados.
+La aplicación se construye primero de manera visual, organizando componentes, vistas, módulos y acciones por rol. Conserva datos de ejemplo en memoria, selector de roles, cámara, mapa y reportes. Las cifras y metas mostradas no son reglas institucionales. Autenticación, persistencia y permisos reales aún no están verificados. La [matriz visual y las reglas de interacción](design.md) describen esta primera entrega; no constituyen la implementación completa del producto.
+
+Las vistas son navegables mediante URLs por rol, enlaces e historial del navegador, con presentación compartida de workspace e interfaz en español. Cambiar el rol de revisión no autentica una cuenta ni concede permisos reales.
 
 ## Alcance
 

@@ -4,25 +4,19 @@ import { useMemo, useState } from "react";
 import {
   Activity,
   ArrowLeft,
-  ArrowUpRight,
   Award,
   BarChart3,
-  BookOpen,
-  Building2,
   CalendarDays,
   CheckCircle2,
   Clock3,
   Eye,
   FileSpreadsheet,
   Filter,
-  GraduationCap,
   HeartHandshake,
-  Layers,
   MapPin,
   QrCode,
   Search,
   ShieldCheck,
-  Sparkles,
   TrendingUp,
   Users,
 } from "lucide-react";
@@ -41,918 +35,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export type CycleCode = "2025-I" | "2025-II" | "2026-I" | "2026-II";
-
-export type StudentActivityLog = {
-  id: string;
-  cycle: CycleCode;
-  title: string;
-  area: "Comunidad y Servicio" | "Educación y Voluntariado" | "Bienestar y Salud" | "Medio Ambiente";
-  place: string;
-  date: string;
-  schedule: string;
-  hours: number;
-  supervisor: string;
-  validationMethod: "QR + GPS" | "QR Presencial";
-  status: "Validado" | "En revisión";
-};
-
-export type CycleSummary = {
-  cycle: CycleCode;
-  year: "2025" | "2026";
-  semester: "Ciclo I" | "Ciclo II";
-  hours: number;
-  goalHours: number;
-  activitiesCount: number;
-  mainProject: string;
-  lastDate: string;
-  status: "Meta cumplida" | "En curso" | "Observado";
-};
-
-export type StudentReportItem = {
-  id: string;
-  name: string;
-  initials: string;
-  studentCode: string;
-  dni: string;
-  faculty: string;
-  email: string;
-  currentSemesterLabel: string;
-  annualGoalHours: number;
-  cycles: Record<CycleCode, CycleSummary>;
-  activities: StudentActivityLog[];
-};
-
-export const ACADEMIC_YEARS: { year: "2025" | "2026"; label: string; cycles: [CycleCode, CycleCode] }[] = [
-  { year: "2025", label: "Año Académico 2025 (2 ciclos)", cycles: ["2025-I", "2025-II"] },
-  { year: "2026", label: "Año Académico 2026 (2 ciclos)", cycles: ["2026-I", "2026-II"] },
-];
-
-export const ALL_CYCLES: CycleCode[] = ["2025-I", "2025-II", "2026-I", "2026-II"];
-
-export const STUDENTS_DATA: StudentReportItem[] = [
-  {
-    id: "est-1",
-    name: "Daniela Rojas Quispe",
-    initials: "DR",
-    studentCode: "202310482 · EST-00482",
-    dni: "74829103",
-    faculty: "Psicología",
-    email: "daniela.rojas@upeu.edu.pe",
-    currentSemesterLabel: "VII Ciclo",
-    annualGoalHours: 160,
-    cycles: {
-      "2025-I": {
-        cycle: "2025-I",
-        year: "2025",
-        semester: "Ciclo I",
-        hours: 40,
-        goalHours: 40,
-        activitiesCount: 4,
-        mainProject: "Escuelas Saludables Ñaña",
-        lastDate: "28 jun 2025",
-        status: "Meta cumplida",
-      },
-      "2025-II": {
-        cycle: "2025-II",
-        year: "2025",
-        semester: "Ciclo II",
-        hours: 42,
-        goalHours: 40,
-        activitiesCount: 4,
-        mainProject: "Brigada Psicoeducativa",
-        lastDate: "29 nov 2025",
-        status: "Meta cumplida",
-      },
-      "2026-I": {
-        cycle: "2026-I",
-        year: "2026",
-        semester: "Ciclo I",
-        hours: 38,
-        goalHours: 40,
-        activitiesCount: 3,
-        mainProject: "Red de Apoyo Familiar",
-        lastDate: "04 jul 2026",
-        status: "Meta cumplida",
-      },
-      "2026-II": {
-        cycle: "2026-II",
-        year: "2026",
-        semester: "Ciclo II",
-        hours: 28.5,
-        goalHours: 40,
-        activitiesCount: 4,
-        mainProject: "Comedor San José",
-        lastDate: "18 oct 2026",
-        status: "En curso",
-      },
-    },
-    activities: [
-      {
-        id: "dr-1",
-        cycle: "2026-II",
-        title: "Huerto comunitario y nutrición",
-        area: "Medio Ambiente",
-        place: "Villa Esperanza, Chosica",
-        date: "04 oct 2026",
-        schedule: "08:00 a. m. - 11:30 a. m.",
-        hours: 3.5,
-        supervisor: "Lic. Marco Céspedes",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "dr-2",
-        cycle: "2026-II",
-        title: "Acompañamiento escolar y lectura",
-        area: "Educación y Voluntariado",
-        place: "I. E. José Olaya",
-        date: "27 sep 2026",
-        schedule: "03:00 p. m. - 09:00 p. m.",
-        hours: 6,
-        supervisor: "Mg. Elena Vargas",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "dr-3",
-        cycle: "2026-II",
-        title: "Despensa solidaria · Manos que alimentan",
-        area: "Comunidad y Servicio",
-        place: "Comedor San José",
-        date: "13 sep 2026",
-        schedule: "07:30 a. m. - 04:30 p. m.",
-        hours: 9,
-        supervisor: "Lic. Marco Céspedes",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "dr-4",
-        cycle: "2026-II",
-        title: "Taller de orientación emocional juvenil",
-        area: "Bienestar y Salud",
-        place: "Centro Comunal Huascata",
-        date: "18 oct 2026",
-        schedule: "08:00 a. m. - 06:00 p. m.",
-        hours: 10,
-        supervisor: "Dra. Ruth Mendoza",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "dr-5",
-        cycle: "2026-I",
-        title: "Programa Red de Apoyo Familiar · Módulo I",
-        area: "Bienestar y Salud",
-        place: "C. P. Virgen del Rosario",
-        date: "16 may 2026",
-        schedule: "08:00 a. m. - 02:00 p. m.",
-        hours: 14,
-        supervisor: "Dra. Ruth Mendoza",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "dr-6",
-        cycle: "2026-I",
-        title: "Programa Red de Apoyo Familiar · Módulo II",
-        area: "Bienestar y Salud",
-        place: "C. P. Virgen del Rosario",
-        date: "13 jun 2026",
-        schedule: "08:00 a. m. - 02:00 p. m.",
-        hours: 12,
-        supervisor: "Dra. Ruth Mendoza",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "dr-7",
-        cycle: "2026-I",
-        title: "Feria de salud mental comunitaria",
-        area: "Comunidad y Servicio",
-        place: "Plaza Principal de Ñaña",
-        date: "04 jul 2026",
-        schedule: "08:00 a. m. - 04:00 p. m.",
-        hours: 12,
-        supervisor: "Lic. Marco Céspedes",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "dr-8",
-        cycle: "2025-II",
-        title: "Brigada Psicoeducativa en Colegios",
-        area: "Educación y Voluntariado",
-        place: "I. E. Felipe Huamán Poma de Ayala",
-        date: "18 oct 2025",
-        schedule: "08:00 a. m. - 02:00 p. m.",
-        hours: 22,
-        supervisor: "Mg. Elena Vargas",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "dr-9",
-        cycle: "2025-II",
-        title: "Clausura de Escuela de Padres",
-        area: "Bienestar y Salud",
-        place: "Auditorio Municipal Chaclacayo",
-        date: "29 nov 2025",
-        schedule: "08:00 a. m. - 04:00 p. m.",
-        hours: 20,
-        supervisor: "Dra. Ruth Mendoza",
-        validationMethod: "QR Presencial",
-        status: "Validado",
-      },
-      {
-        id: "dr-10",
-        cycle: "2025-I",
-        title: "Campaña Escuelas Saludables Ñaña",
-        area: "Bienestar y Salud",
-        place: "Red Educativa Ñaña",
-        date: "28 jun 2025",
-        schedule: "Jornadas acumuladas semestrales",
-        hours: 40,
-        supervisor: "Dra. Ruth Mendoza",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-    ],
-  },
-  {
-    id: "est-2",
-    name: "Mateo Valdivia Huamán",
-    initials: "MV",
-    studentCode: "202210894 · EST-00894",
-    dni: "72910485",
-    faculty: "Ingeniería de Sistemas",
-    email: "mateo.valdivia@upeu.edu.pe",
-    currentSemesterLabel: "VIII Ciclo",
-    annualGoalHours: 160,
-    cycles: {
-      "2025-I": {
-        cycle: "2025-I",
-        year: "2025",
-        semester: "Ciclo I",
-        hours: 40,
-        goalHours: 40,
-        activitiesCount: 4,
-        mainProject: "Alfabetización Digital",
-        lastDate: "21 jun 2025",
-        status: "Meta cumplida",
-      },
-      "2025-II": {
-        cycle: "2025-II",
-        year: "2025",
-        semester: "Ciclo II",
-        hours: 40,
-        goalHours: 40,
-        activitiesCount: 5,
-        mainProject: "Aulas Conectadas Chosica",
-        lastDate: "22 nov 2025",
-        status: "Meta cumplida",
-      },
-      "2026-I": {
-        cycle: "2026-I",
-        year: "2026",
-        semester: "Ciclo I",
-        hours: 44,
-        goalHours: 40,
-        activitiesCount: 4,
-        mainProject: "Soporte TI Comedores",
-        lastDate: "27 jun 2026",
-        status: "Meta cumplida",
-      },
-      "2026-II": {
-        cycle: "2026-II",
-        year: "2026",
-        semester: "Ciclo II",
-        hours: 40,
-        goalHours: 40,
-        activitiesCount: 4,
-        mainProject: "Laboratorio Digital Escolar",
-        lastDate: "20 oct 2026",
-        status: "Meta cumplida",
-      },
-    },
-    activities: [
-      {
-        id: "mv-1",
-        cycle: "2026-II",
-        title: "Capacitación en ofimática para emprendedores",
-        area: "Educación y Voluntariado",
-        place: "Centro Cívico Chaclacayo",
-        date: "20 oct 2026",
-        schedule: "08:00 a. m. - 01:00 p. m.",
-        hours: 15,
-        supervisor: "Ing. Carlos Pineda",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "mv-2",
-        cycle: "2026-II",
-        title: "Mantenimiento de laboratorio de cómputo",
-        area: "Educación y Voluntariado",
-        place: "I. E. José Olaya",
-        date: "03 oct 2026",
-        schedule: "08:00 a. m. - 05:00 p. m.",
-        hours: 15,
-        supervisor: "Ing. Carlos Pineda",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "mv-3",
-        cycle: "2026-II",
-        title: "Taller de ciberseguridad para escolares",
-        area: "Educación y Voluntariado",
-        place: "Biblioteca Central",
-        date: "19 sep 2026",
-        schedule: "09:00 a. m. - 02:00 p. m.",
-        hours: 10,
-        supervisor: "Mg. Elena Vargas",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "mv-4",
-        cycle: "2026-I",
-        title: "Inventario digital para comedores solidarios",
-        area: "Comunidad y Servicio",
-        place: "Comedor San José",
-        date: "27 jun 2026",
-        schedule: "Proyecto semestral",
-        hours: 44,
-        supervisor: "Ing. Carlos Pineda",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "mv-5",
-        cycle: "2025-II",
-        title: "Aulas Conectadas · Instalación de redes",
-        area: "Educación y Voluntariado",
-        place: "Instituciones Educativas de Lurigancho",
-        date: "22 nov 2025",
-        schedule: "Proyecto semestral",
-        hours: 40,
-        supervisor: "Ing. Carlos Pineda",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "mv-6",
-        cycle: "2025-I",
-        title: "Alfabetización Digital para Adultos Mayores",
-        area: "Comunidad y Servicio",
-        place: "CIAM Chaclacayo",
-        date: "21 jun 2025",
-        schedule: "Proyecto semestral",
-        hours: 40,
-        supervisor: "Ing. Carlos Pineda",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-    ],
-  },
-  {
-    id: "est-3",
-    name: "Camila Paredes Tello",
-    initials: "CP",
-    studentCode: "202320115 · EST-00115",
-    dni: "75103948",
-    faculty: "Medicina Humana",
-    email: "camila.paredes@upeu.edu.pe",
-    currentSemesterLabel: "VI Ciclo",
-    annualGoalHours: 160,
-    cycles: {
-      "2025-I": {
-        cycle: "2025-I",
-        year: "2025",
-        semester: "Ciclo I",
-        hours: 36,
-        goalHours: 40,
-        activitiesCount: 3,
-        mainProject: "Campaña Anemia Cero",
-        lastDate: "14 jun 2025",
-        status: "Meta cumplida",
-      },
-      "2025-II": {
-        cycle: "2025-II",
-        year: "2025",
-        semester: "Ciclo II",
-        hours: 44,
-        goalHours: 40,
-        activitiesCount: 5,
-        mainProject: "Clínica Móvil Solidaria",
-        lastDate: "30 nov 2025",
-        status: "Meta cumplida",
-      },
-      "2026-I": {
-        cycle: "2026-I",
-        year: "2026",
-        semester: "Ciclo I",
-        hours: 40,
-        goalHours: 40,
-        activitiesCount: 4,
-        mainProject: "Prevención Dengue y Salud",
-        lastDate: "28 jun 2026",
-        status: "Meta cumplida",
-      },
-      "2026-II": {
-        cycle: "2026-II",
-        year: "2026",
-        semester: "Ciclo II",
-        hours: 34,
-        goalHours: 40,
-        activitiesCount: 4,
-        mainProject: "Jornada Médica Integral",
-        lastDate: "21 oct 2026",
-        status: "En curso",
-      },
-    },
-    activities: [
-      {
-        id: "cp-1",
-        cycle: "2026-II",
-        title: "Jornada de salud preventiva y triaje",
-        area: "Bienestar y Salud",
-        place: "Clínica Universitaria / Ñaña",
-        date: "21 oct 2026",
-        schedule: "08:00 a. m. - 04:00 p. m.",
-        hours: 12,
-        supervisor: "Dr. Samuel Lozada",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "cp-2",
-        cycle: "2026-II",
-        title: "Despistaje de anemia infantil",
-        area: "Bienestar y Salud",
-        place: "Comedor San José",
-        date: "04 oct 2026",
-        schedule: "08:00 a. m. - 03:00 p. m.",
-        hours: 12,
-        supervisor: "Dr. Samuel Lozada",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "cp-3",
-        cycle: "2026-II",
-        title: "Charla de higiene y primeros auxilios",
-        area: "Bienestar y Salud",
-        place: "I. E. José Olaya",
-        date: "20 sep 2026",
-        schedule: "08:00 a. m. - 02:00 p. m.",
-        hours: 10,
-        supervisor: "Dra. Ruth Mendoza",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "cp-4",
-        cycle: "2026-I",
-        title: "Brigada de Prevención contra el Dengue",
-        area: "Bienestar y Salud",
-        place: "AA. HH. Morón y Carapongo",
-        date: "28 jun 2026",
-        schedule: "4 jornadas médicas",
-        hours: 40,
-        supervisor: "Dr. Samuel Lozada",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "cp-5",
-        cycle: "2025-II",
-        title: "Operativo Clínica Móvil Solidaria",
-        area: "Bienestar y Salud",
-        place: "Huaycán Zona Z",
-        date: "30 nov 2025",
-        schedule: "5 jornadas de atención",
-        hours: 44,
-        supervisor: "Dr. Samuel Lozada",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "cp-6",
-        cycle: "2025-I",
-        title: "Campaña Anemia Cero en Cunas Comunales",
-        area: "Bienestar y Salud",
-        place: "Lurigancho - Chosica",
-        date: "14 jun 2025",
-        schedule: "3 jornadas integrales",
-        hours: 36,
-        supervisor: "Dr. Samuel Lozada",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-    ],
-  },
-  {
-    id: "est-4",
-    name: "Sebastián Mendoza Flores",
-    initials: "SM",
-    studentCode: "202410309 · EST-00309",
-    dni: "76482019",
-    faculty: "Administración y Negocios",
-    email: "sebastian.mendoza@upeu.edu.pe",
-    currentSemesterLabel: "V Ciclo",
-    annualGoalHours: 160,
-    cycles: {
-      "2025-I": {
-        cycle: "2025-I",
-        year: "2025",
-        semester: "Ciclo I",
-        hours: 32,
-        goalHours: 40,
-        activitiesCount: 3,
-        mainProject: "Emprende Mujer Chosica",
-        lastDate: "20 jun 2025",
-        status: "Observado",
-      },
-      "2025-II": {
-        cycle: "2025-II",
-        year: "2025",
-        semester: "Ciclo II",
-        hours: 40,
-        goalHours: 40,
-        activitiesCount: 4,
-        mainProject: "Formalización MYPES",
-        lastDate: "25 nov 2025",
-        status: "Meta cumplida",
-      },
-      "2026-I": {
-        cycle: "2026-I",
-        year: "2026",
-        semester: "Ciclo I",
-        hours: 38,
-        goalHours: 40,
-        activitiesCount: 4,
-        mainProject: "Educación Financiera",
-        lastDate: "01 jul 2026",
-        status: "Meta cumplida",
-      },
-      "2026-II": {
-        cycle: "2026-II",
-        year: "2026",
-        semester: "Ciclo II",
-        hours: 18,
-        goalHours: 40,
-        activitiesCount: 2,
-        mainProject: "Gestión Comedores Populares",
-        lastDate: "10 oct 2026",
-        status: "Observado",
-      },
-    },
-    activities: [
-      {
-        id: "sm-1",
-        cycle: "2026-II",
-        title: "Asesoría en costos y compras comunitarias",
-        area: "Comunidad y Servicio",
-        place: "Comedor San José",
-        date: "10 oct 2026",
-        schedule: "08:00 a. m. - 02:00 p. m.",
-        hours: 10,
-        supervisor: "Mg. Jorge Alarcón",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "sm-2",
-        cycle: "2026-II",
-        title: "Taller de presupuesto familiar",
-        area: "Educación y Voluntariado",
-        place: "Centro Comunal Era de Ñaña",
-        date: "26 sep 2026",
-        schedule: "08:00 a. m. - 04:00 p. m.",
-        hours: 8,
-        supervisor: "Mg. Jorge Alarcón",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "sm-3",
-        cycle: "2026-I",
-        title: "Programa de Educación Financiera Barrial",
-        area: "Educación y Voluntariado",
-        place: "Asociación de Comerciantes Ñaña",
-        date: "01 jul 2026",
-        schedule: "4 sesiones",
-        hours: 38,
-        supervisor: "Mg. Jorge Alarcón",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "sm-4",
-        cycle: "2025-II",
-        title: "Clínica de Formalización y Gestión MYPES",
-        area: "Comunidad y Servicio",
-        place: "Cámara de Comercio Este",
-        date: "25 nov 2025",
-        schedule: "4 sesiones",
-        hours: 40,
-        supervisor: "Mg. Jorge Alarcón",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "sm-5",
-        cycle: "2025-I",
-        title: "Incubadora Social Emprende Mujer",
-        area: "Comunidad y Servicio",
-        place: "Municipalidad de Chosica",
-        date: "20 jun 2025",
-        schedule: "3 sesiones",
-        hours: 32,
-        supervisor: "Mg. Jorge Alarcón",
-        validationMethod: "QR Presencial",
-        status: "Validado",
-      },
-    ],
-  },
-  {
-    id: "est-5",
-    name: "Lucía Fernández Ríos",
-    initials: "LF",
-    studentCode: "202220512 · EST-00512",
-    dni: "71839204",
-    faculty: "Arquitectura y Urbanismo",
-    email: "lucia.fernandez@upeu.edu.pe",
-    currentSemesterLabel: "VIII Ciclo",
-    annualGoalHours: 160,
-    cycles: {
-      "2025-I": {
-        cycle: "2025-I",
-        year: "2025",
-        semester: "Ciclo I",
-        hours: 40,
-        goalHours: 40,
-        activitiesCount: 4,
-        mainProject: "Espacios Públicos Seguros",
-        lastDate: "26 jun 2025",
-        status: "Meta cumplida",
-      },
-      "2025-II": {
-        cycle: "2025-II",
-        year: "2025",
-        semester: "Ciclo II",
-        hours: 40,
-        goalHours: 40,
-        activitiesCount: 4,
-        mainProject: "Biohuertos Urbanos",
-        lastDate: "28 nov 2025",
-        status: "Meta cumplida",
-      },
-      "2026-I": {
-        cycle: "2026-I",
-        year: "2026",
-        semester: "Ciclo I",
-        hours: 42,
-        goalHours: 40,
-        activitiesCount: 4,
-        mainProject: "Mejoramiento de Comedores",
-        lastDate: "03 jul 2026",
-        status: "Meta cumplida",
-      },
-      "2026-II": {
-        cycle: "2026-II",
-        year: "2026",
-        semester: "Ciclo II",
-        hours: 31,
-        goalHours: 40,
-        activitiesCount: 3,
-        mainProject: "Recuperación de Parques",
-        lastDate: "17 oct 2026",
-        status: "En curso",
-      },
-    },
-    activities: [
-      {
-        id: "lf-1",
-        cycle: "2026-II",
-        title: "Recuperación y arborización de parque vecinal",
-        area: "Medio Ambiente",
-        place: "Parque Los Olivos de Ñaña",
-        date: "17 oct 2026",
-        schedule: "07:30 a. m. - 03:30 p. m.",
-        hours: 12,
-        supervisor: "Arq. Patricia Solís",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "lf-2",
-        cycle: "2026-II",
-        title: "Diseño participativo de mobiliario escolar",
-        area: "Educación y Voluntariado",
-        place: "I. E. José Olaya",
-        date: "27 sep 2026",
-        schedule: "08:00 a. m. - 05:00 p. m.",
-        hours: 11,
-        supervisor: "Arq. Patricia Solís",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "lf-3",
-        cycle: "2026-II",
-        title: "Diagnóstico de accesibilidad en comedor solidario",
-        area: "Comunidad y Servicio",
-        place: "Comedor San José",
-        date: "12 sep 2026",
-        schedule: "08:00 a. m. - 04:00 p. m.",
-        hours: 8,
-        supervisor: "Arq. Patricia Solís",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "lf-4",
-        cycle: "2026-I",
-        title: "Acondicionamiento de cocinas comunitarias",
-        area: "Comunidad y Servicio",
-        place: "Red de Ollas Comunes Chosica",
-        date: "03 jul 2026",
-        schedule: "4 jornadas técnicas",
-        hours: 42,
-        supervisor: "Arq. Patricia Solís",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "lf-5",
-        cycle: "2025-II",
-        title: "Implementación de Biohuertos Escolares",
-        area: "Medio Ambiente",
-        place: "Colegios de Huaycán",
-        date: "28 nov 2025",
-        schedule: "4 jornadas técnicas",
-        hours: 40,
-        supervisor: "Arq. Patricia Solís",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "lf-6",
-        cycle: "2025-I",
-        title: "Proyecto Espacios Públicos Seguros",
-        area: "Comunidad y Servicio",
-        place: "Alameda Ñaña",
-        date: "26 jun 2025",
-        schedule: "4 jornadas técnicas",
-        hours: 40,
-        supervisor: "Arq. Patricia Solís",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-    ],
-  },
-  {
-    id: "est-6",
-    name: "Diego Quispe Condori",
-    initials: "DQ",
-    studentCode: "202310771 · EST-00771",
-    dni: "73920184",
-    faculty: "Enfermería",
-    email: "diego.quispe@upeu.edu.pe",
-    currentSemesterLabel: "VII Ciclo",
-    annualGoalHours: 160,
-    cycles: {
-      "2025-I": {
-        cycle: "2025-I",
-        year: "2025",
-        semester: "Ciclo I",
-        hours: 40,
-        goalHours: 40,
-        activitiesCount: 4,
-        mainProject: "Vacunación y Control Niño Sano",
-        lastDate: "27 jun 2025",
-        status: "Meta cumplida",
-      },
-      "2025-II": {
-        cycle: "2025-II",
-        year: "2025",
-        semester: "Ciclo II",
-        hours: 38,
-        goalHours: 40,
-        activitiesCount: 4,
-        mainProject: "Cuidado del Adulto Mayor",
-        lastDate: "26 nov 2025",
-        status: "Meta cumplida",
-      },
-      "2026-I": {
-        cycle: "2026-I",
-        year: "2026",
-        semester: "Ciclo I",
-        hours: 40,
-        goalHours: 40,
-        activitiesCount: 4,
-        mainProject: "Promoción de Vida Saludable",
-        lastDate: "02 jul 2026",
-        status: "Meta cumplida",
-      },
-      "2026-II": {
-        cycle: "2026-II",
-        year: "2026",
-        semester: "Ciclo II",
-        hours: 40,
-        goalHours: 40,
-        activitiesCount: 5,
-        mainProject: "Jornada de Salud Integral",
-        lastDate: "22 oct 2026",
-        status: "Meta cumplida",
-      },
-    },
-    activities: [
-      {
-        id: "dq-1",
-        cycle: "2026-II",
-        title: "Control de signos vitales y consejería nutricional",
-        area: "Bienestar y Salud",
-        place: "Clínica Universitaria",
-        date: "22 oct 2026",
-        schedule: "08:00 a. m. - 04:00 p. m.",
-        hours: 16,
-        supervisor: "Lic. Rosaura Medina",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "dq-2",
-        cycle: "2026-II",
-        title: "Campaña de vacunación y prevención comunitaria",
-        area: "Bienestar y Salud",
-        place: "Posta Médica Virgen del Carmen",
-        date: "08 oct 2026",
-        schedule: "08:00 a. m. - 04:00 p. m.",
-        hours: 14,
-        supervisor: "Lic. Rosaura Medina",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "dq-3",
-        cycle: "2026-II",
-        title: "Visitas domiciliarias al adulto mayor",
-        area: "Comunidad y Servicio",
-        place: "Sector Balaguer, Ñaña",
-        date: "21 sep 2026",
-        schedule: "08:00 a. m. - 02:00 p. m.",
-        hours: 10,
-        supervisor: "Lic. Rosaura Medina",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "dq-4",
-        cycle: "2026-I",
-        title: "Promoción de Vida Saludable · 8 Remedios Naturales",
-        area: "Bienestar y Salud",
-        place: "Comunidades de Chaclacayo",
-        date: "02 jul 2026",
-        schedule: "4 jornadas",
-        hours: 40,
-        supervisor: "Lic. Rosaura Medina",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "dq-5",
-        cycle: "2025-II",
-        title: "Programa Integral del Adulto Mayor",
-        area: "Bienestar y Salud",
-        place: "CIAM Lurigancho",
-        date: "26 nov 2025",
-        schedule: "4 jornadas",
-        hours: 38,
-        supervisor: "Lic. Rosaura Medina",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-      {
-        id: "dq-6",
-        cycle: "2025-I",
-        title: "Control Niño Sano y Crecimiento",
-        area: "Bienestar y Salud",
-        place: "Red de Salud Lima Este",
-        date: "27 jun 2025",
-        schedule: "4 jornadas",
-        hours: 40,
-        supervisor: "Lic. Rosaura Medina",
-        validationMethod: "QR + GPS",
-        status: "Validado",
-      },
-    ],
-  },
-];
+import { ACADEMIC_YEARS, ALL_CYCLES, STUDENTS_DATA, type CycleCode, type StudentReportItem } from "../fixtures";
+import { LabeledSelect } from "@/components/ui/labeled-select";
 
 export function getStudentTotalHours(student: StudentReportItem): number {
   return ALL_CYCLES.reduce((acc, cycle) => acc + student.cycles[cycle].hours, 0);
@@ -964,14 +48,10 @@ export function getStudentTotalActivities(student: StudentReportItem): number {
 
 interface AdminDashboardAndReportProps {
   mode: "dashboard" | "report";
-  onSwitchToReport: () => void;
-  onSwitchToDashboard: () => void;
 }
 
 export function AdminDashboardAndReport({
   mode,
-  onSwitchToReport,
-  onSwitchToDashboard,
 }: AdminDashboardAndReportProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedYearFilter, setSelectedYearFilter] = useState<"ALL" | "2026" | "2025">("ALL");
@@ -1231,13 +311,13 @@ export function AdminDashboardAndReport({
                       const pct = Math.min(100, Math.round((cData.hours / cData.goalHours) * 100));
                       const isSelected = detailCycleFilter === cycleCode;
                       return (
-                        <button
+                        <Button variant="ghost"
                           key={cycleCode}
                           type="button"
                           onClick={() =>
                             setDetailCycleFilter(isSelected ? "ALL" : cycleCode)
                           }
-                          className={`flex flex-col justify-between rounded-lg border p-3.5 text-left transition-all hover:border-primary/60 hover:bg-muted/40 ${
+                          className={`h-auto whitespace-normal flex flex-col justify-between rounded-lg border p-3.5 text-left transition-all hover:border-primary/60 hover:bg-muted/40 ${
                             isSelected
                               ? "border-primary bg-primary/5 ring-2 ring-primary/20"
                               : "bg-background"
@@ -1280,7 +360,7 @@ export function AdminDashboardAndReport({
                               <span>Últ.: {cData.lastDate}</span>
                             </div>
                           </div>
-                        </button>
+                        </Button>
                       );
                     })}
                   </CardContent>
@@ -1424,35 +504,13 @@ export function AdminDashboardAndReport({
           <label className="flex items-center gap-2 text-xs text-muted-foreground">
             <Filter className="size-3.5 shrink-0" />
             <span className="shrink-0 font-medium">Escuela:</span>
-            <select
-              className="h-8 w-full rounded-md border bg-background px-2 text-sm text-foreground"
-              value={selectedFaculty}
-              onChange={(e) => setSelectedFaculty(e.target.value)}
-              aria-label="Filtrar por escuela profesional"
-            >
-              {faculties.map((fac) => (
-                <option key={fac} value={fac}>
-                  {fac}
-                </option>
-              ))}
-            </select>
+            <LabeledSelect label="Filtrar por escuela profesional" className="w-full" value={selectedFaculty} onValueChange={setSelectedFaculty} options={faculties.map((faculty) => ({ value: faculty, label: faculty }))} />
           </label>
 
           <label className="flex items-center gap-2 text-xs text-muted-foreground">
             <CalendarDays className="size-3.5 shrink-0" />
             <span className="shrink-0 font-medium">Ciclos:</span>
-            <select
-              className="h-8 w-full rounded-md border bg-background px-2 text-sm text-foreground"
-              value={selectedYearFilter}
-              onChange={(e) =>
-                setSelectedYearFilter(e.target.value as "ALL" | "2026" | "2025")
-              }
-              aria-label="Filtrar columnas de ciclos por año"
-            >
-              <option value="ALL">2025 y 2026 (4 ciclos)</option>
-              <option value="2026">Año 2026 (2026-I y 2026-II)</option>
-              <option value="2025">Año 2025 (2025-I y 2025-II)</option>
-            </select>
+            <LabeledSelect label="Filtrar columnas de ciclos por año" className="w-full" value={selectedYearFilter} onValueChange={setSelectedYearFilter} options={[{ value: "ALL", label: "2025 y 2026 (4 ciclos)" }, { value: "2026", label: "Año 2026 (2026-I y 2026-II)" }, { value: "2025", label: "Año 2025 (2025-I y 2025-II)" }]} />
           </label>
         </div>
 
@@ -1543,13 +601,13 @@ export function AdminDashboardAndReport({
                         </AvatarFallback>
                       </Avatar>
                       <div className="space-y-0.5 whitespace-normal">
-                        <button
+                        <Button variant="ghost"
                           type="button"
                           onClick={() => openStudentDetail(student.id, "ALL")}
-                          className="text-left font-semibold text-foreground hover:text-primary hover:underline"
+                          className="h-auto whitespace-normal text-left font-semibold text-foreground hover:text-primary hover:underline"
                         >
                           {student.name}
-                        </button>
+                        </Button>
                         <p className="text-xs text-muted-foreground">
                           {student.faculty} · {student.currentSemesterLabel}
                         </p>
@@ -1609,10 +667,10 @@ export function AdminDashboardAndReport({
                       );
                       return (
                         <TableCell key={cycleCode} className="border-r py-2.5">
-                          <button
+                          <Button variant="ghost"
                             type="button"
                             onClick={() => openStudentDetail(student.id, cycleCode)}
-                            className="w-full rounded-lg border bg-muted/20 p-2.5 text-left transition-colors hover:border-primary/50 hover:bg-muted/60"
+                            className="h-auto whitespace-normal w-full rounded-lg border bg-muted/20 p-2.5 text-left transition-colors hover:border-primary/50 hover:bg-muted/60"
                             title={`Ver detalle de ${student.name} en el ciclo ${cycleCode}`}
                           >
                             <div className="flex items-center justify-between gap-2">
@@ -1642,7 +700,7 @@ export function AdminDashboardAndReport({
                               <span>{cData.activitiesCount} activ.</span>
                               <span>Últ.: {cData.lastDate}</span>
                             </div>
-                          </button>
+                          </Button>
                         </TableCell>
                       );
                     })
@@ -1912,10 +970,10 @@ export function AdminDashboardAndReport({
 
             {/* Semáforo de estado de cumplimiento del ciclo vigente */}
             <div className="grid gap-3 rounded-xl border bg-muted/30 p-3.5 sm:grid-cols-3">
-              <button
+              <Button variant="ghost"
                 type="button"
                 onClick={() => setSelectedStatusFilter("Meta cumplida")}
-                className="flex items-center justify-between rounded-lg border bg-background p-3 text-left transition hover:border-emerald-500"
+                className="h-auto whitespace-normal flex items-center justify-between rounded-lg border bg-background p-3 text-left transition hover:border-emerald-500"
               >
                 <div>
                   <p className="text-xs text-muted-foreground">Meta cumplida (2026-II)</p>
@@ -1924,11 +982,11 @@ export function AdminDashboardAndReport({
                   </p>
                 </div>
                 <CheckCircle2 className="size-5 text-emerald-600" />
-              </button>
-              <button
+              </Button>
+              <Button variant="ghost"
                 type="button"
                 onClick={() => setSelectedStatusFilter("En curso")}
-                className="flex items-center justify-between rounded-lg border bg-background p-3 text-left transition hover:border-primary"
+                className="h-auto whitespace-normal flex items-center justify-between rounded-lg border bg-background p-3 text-left transition hover:border-primary"
               >
                 <div>
                   <p className="text-xs text-muted-foreground">En progreso regular</p>
@@ -1937,11 +995,11 @@ export function AdminDashboardAndReport({
                   </p>
                 </div>
                 <Clock3 className="size-5 text-primary" />
-              </button>
-              <button
+              </Button>
+              <Button variant="ghost"
                 type="button"
                 onClick={() => setSelectedStatusFilter("Observado")}
-                className="flex items-center justify-between rounded-lg border bg-background p-3 text-left transition hover:border-amber-500"
+                className="h-auto whitespace-normal flex items-center justify-between rounded-lg border bg-background p-3 text-left transition hover:border-amber-500"
               >
                 <div>
                   <p className="text-xs text-muted-foreground">Requiere seguimiento</p>
@@ -1950,7 +1008,7 @@ export function AdminDashboardAndReport({
                   </p>
                 </div>
                 <Activity className="size-5 text-amber-600" />
-              </button>
+              </Button>
             </div>
           </CardContent>
         </Card>
@@ -1993,17 +1051,17 @@ export function AdminDashboardAndReport({
                 {STUDENTS_DATA.map((student) => {
                   const total = getStudentTotalHours(student);
                   return (
-                    <button
+                    <Button variant="ghost"
                       key={student.id}
                       type="button"
                       onClick={() => openStudentDetail(student.id, "ALL")}
-                      className="flex items-center justify-between rounded-lg border bg-muted/20 px-3 py-2 text-left text-xs transition hover:border-primary/50 hover:bg-muted/50"
+                      className="h-auto whitespace-normal flex items-center justify-between rounded-lg border bg-muted/20 px-3 py-2 text-left text-xs transition hover:border-primary/50 hover:bg-muted/50"
                     >
                       <span className="truncate font-medium">{student.faculty}</span>
                       <Badge variant="secondary" className="ml-2 shrink-0">
                         {total} h
                       </Badge>
-                    </button>
+                    </Button>
                   );
                 })}
               </div>

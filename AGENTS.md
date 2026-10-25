@@ -13,6 +13,7 @@
 | Propósito, estado y arranque | [README](README.md) |
 | Alcance, actores y vocabulario | [Producto](docs/product.md) y specs de la capacidad |
 | Módulos, dependencias, servidor/cliente | [Arquitectura](docs/architecture.md) |
+| Componentes, drawers, confirmaciones y vistas por rol | [Diseño de interfaz](docs/design.md) |
 | Modelo, integridad, RLS y migraciones | [Base de datos](docs/database.md) y skill InsForge correspondiente |
 | Convenciones, números mágicos, pruebas y estrategia Git | [Desarrollo](docs/development.md) |
 | Entornos, secretos, despliegue y recuperación | [Operación](docs/operations.md) |
@@ -45,7 +46,7 @@ Registrar en `review.md` del cambio: alcance aceptado, fuente humana, tareas/ent
 6. **Entregar:** explicar cambios, evidencia y pendientes; identificar documentos actualizados y aceptación faltante.
 7. **Consolidar:** con resultado aceptado y cierre autorizado, sincronizar specs y archivar conforme a OpenSpec. Artefactos completos no significan software implementado.
 
-La etapa actual es documental. No conectar backend, instalar dependencias ni reorganizar código por iniciativa propia. ODD es histórico; no mantener otro backlog activo.
+La etapa actual es visual: el humano autorizó separar componentes, vistas y módulos en el cambio `modularizar-interfaz-por-roles`. Aplicar [diseño de interfaz](docs/design.md): controles compartidos, drawer derecho para crear/editar (también si dice «modal») y alerta con acción roja para eliminar. No conectar backend, instalar dependencias ni ampliar el alcance por iniciativa propia. ODD es histórico; no mantener otro backlog activo.
 
 ## Git y aislamiento
 

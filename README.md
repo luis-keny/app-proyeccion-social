@@ -2,11 +2,13 @@
 
 Sistema para consultar actividades, registrar asistencia y acreditar horas de proyección social. El alcance inicial es una sola sede, sin inscripción previa y con crédito fijo por sesión asistida.
 
-**Estado:** demo visual con datos en memoria. Autenticación, persistencia y permisos reales aún no están verificados.
+**Estado:** aplicación en construcción, en etapa visual por roles y módulos, con datos de ejemplo en memoria. Autenticación, persistencia y permisos reales aún no están implementados/verificados.
 
 ## Organización
 
-Monolito Next.js con InsForge como base de datos. La estructura de módulos por negocio y su integración están descritas en [arquitectura](docs/architecture.md); todavía no se ha migrado el código.
+Monolito Next.js con InsForge previsto como base de datos. El frontend se organiza por capacidades en `modules/`; la integración está descrita en [arquitectura](docs/architecture.md). Las reglas visuales están en [diseño de interfaz](docs/design.md).
+
+Las vistas tienen rutas en `app/workspace/[role]/` y comparten el layout de workspace con sidebar y navegación en español. El acceso inicial conduce a `/workspace/estudiante/progreso`; el selector permite explorar los demás roles.
 
 | Ubicación | Contenido |
 |---|---|
@@ -15,7 +17,8 @@ Monolito Next.js con InsForge como base de datos. La estructura de módulos por 
 | [CLAUDE.md](CLAUDE.md) | Referencia a AGENTS.md |
 | `openspec/specs/` | Requisitos consolidados; todavía sin baseline aceptada |
 | [Cambio de bases](openspec/changes/establecer-bases/proposal.md) | Propuesta, escenarios, tareas, preguntas y revisión |
-| `app/`, `components/`, `hooks/`, `lib/` | Código actual de la demo |
+| [Cambio de interfaz](openspec/changes/modularizar-interfaz-por-roles/proposal.md) | Separación visual, reglas de diseño y validación |
+| `app/`, `modules/`, `components/`, `hooks/`, `lib/` | Rutas, capacidades visuales y componentes compartidos |
 | `odd/` | Historial de trabajo; no un backlog activo |
 
 ## Desarrollo local
@@ -27,7 +30,7 @@ npm ci
 npm run dev
 ```
 
-Abrir [localhost:3000](http://localhost:3000). La demo usa datos de ejemplo y no necesita una clave administrativa para explorarlos.
+Abrir [localhost:3000](http://localhost:3000). La etapa visual usa datos de ejemplo y no necesita una clave administrativa para explorarlos.
 
 Comprobaciones y convenciones: [desarrollo](docs/development.md).
 
