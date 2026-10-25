@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Proyección Social · UPeU
 
-## Getting Started
+Sistema para consultar actividades, registrar asistencia y acreditar horas de proyección social. El alcance inicial es una sola sede, sin inscripción previa y con crédito fijo por sesión asistida.
 
-First, run the development server:
+**Estado:** demo visual con datos en memoria. Autenticación, persistencia y permisos reales aún no están verificados.
+
+## Organización
+
+Monolito Next.js con InsForge como base de datos. La estructura de módulos por negocio y su integración están descritas en [arquitectura](docs/architecture.md); todavía no se ha migrado el código.
+
+| Ubicación | Contenido |
+|---|---|
+| [docs/](docs/README.md) | Producto, arquitectura, datos, desarrollo, operación y decisiones |
+| [AGENTS.md](AGENTS.md) | Navegación, reglas, autorizaciones y flujo de agentes |
+| [CLAUDE.md](CLAUDE.md) | Referencia a AGENTS.md |
+| `openspec/specs/` | Requisitos consolidados; todavía sin baseline aceptada |
+| [Cambio de bases](openspec/changes/establecer-bases/proposal.md) | Propuesta, escenarios, tareas, preguntas y revisión |
+| `app/`, `components/`, `hooks/`, `lib/` | Código actual de la demo |
+| `odd/` | Historial de trabajo; no un backlog activo |
+
+## Desarrollo local
+
+Stack: Next.js, React, TypeScript y Tailwind CSS. Las versiones exactas están en `package.json` y el lockfile.
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abrir [localhost:3000](http://localhost:3000). La demo usa datos de ejemplo y no necesita una clave administrativa para explorarlos.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Comprobaciones y convenciones: [desarrollo](docs/development.md).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Cómo trabajamos
 
-## Learn More
+Necesidad → propuesta → aceptación y autorización humanas → ejecución → validación → aceptación del resultado → consolidación.
 
-To learn more about Next.js, take a look at the following resources:
+El humano define necesidades y acepta propuestas; los agentes ejecutan el alcance autorizado y mantienen su documentación. Aprobar un diseño no autoriza por sí solo cambios en datos reales o despliegues. Ver [flujo completo](AGENTS.md).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Los documentos describen el estado vigente, sin versiones ni diarios. No incluir secretos ni datos personales reales en código, ejemplos o Git.
