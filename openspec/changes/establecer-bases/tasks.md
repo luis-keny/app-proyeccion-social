@@ -8,6 +8,7 @@
 - [x] 1.4 Consolidar docs en producto, arquitectura, datos, desarrollo, operación y decisiones.
 - [x] 1.5 Añadir convenciones, incluida la regla de números mágicos.
 - [x] 1.6 Actualizar referencias, retirar duplicados y verificar integridad documental.
+- [x] 1.7 Documentar Ship/Show/Ask, trabajo en rama actual y aislamiento de cambios grandes por instrucción humana.
 
 ## Definición pendiente
 

@@ -14,7 +14,7 @@
 | Alcance, actores y vocabulario | [Producto](docs/product.md) y specs de la capacidad |
 | Módulos, dependencias, servidor/cliente | [Arquitectura](docs/architecture.md) |
 | Modelo, integridad, RLS y migraciones | [Base de datos](docs/database.md) y skill InsForge correspondiente |
-| Convenciones, números mágicos y pruebas | [Desarrollo](docs/development.md) |
+| Convenciones, números mágicos, pruebas y estrategia Git | [Desarrollo](docs/development.md) |
 | Entornos, secretos, despliegue y recuperación | [Operación](docs/operations.md) |
 | Elecciones duraderas y su estado | [Decisiones](docs/decisions/README.md) |
 | Requisitos verificables | `openspec/specs/` y delta specs del cambio |
@@ -46,6 +46,13 @@ Registrar en `review.md` del cambio: alcance aceptado, fuente humana, tareas/ent
 7. **Consolidar:** con resultado aceptado y cierre autorizado, sincronizar specs y archivar conforme a OpenSpec. Artefactos completos no significan software implementado.
 
 La etapa actual es documental. No conectar backend, instalar dependencias ni reorganizar código por iniciativa propia. ODD es histórico; no mantener otro backlog activo.
+
+## Git y aislamiento
+
+- Aplicar [Ship / Show / Ask](docs/development.md#estrategia-de-git-ship--show--ask) según riesgo e incertidumbre; indicar la modalidad al preparar la tarea y revisar si cambia su alcance.
+- Trabajar por defecto en la rama y checkout actuales. Solo considerar una rama o worktree para modificaciones grandes que justifiquen aislamiento; no crearlos por rutina ni por elegir Show o Ask.
+- Comprobar cambios pendientes, base y autorizaciones antes de crear o integrar una rama/worktree. Reutilizar un checkout adecuado y preservar trabajo ajeno.
+- Ship/Show operan dentro del alcance aceptado; Ask espera la decisión faltante. Ninguna modalidad autoriza por sí sola commits, push, PR o despliegues.
 
 ## Documentación obligatoria
 

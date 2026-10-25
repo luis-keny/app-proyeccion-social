@@ -8,6 +8,8 @@ En la conversación de este cambio aceptó proceder con la reorganización docum
 
 La autorización cubre fusionar/retirar documentos redundantes, actualizar README/AGENTS/CLAUDE, añadir convenciones de desarrollo y corregir referencias/configuración de OpenSpec.
 
+El usuario indicó Ship/Show/Ask como estrategia Git y reservó ramas o worktrees para modificaciones grandes. Se documenta esta regla en desarrollo, AGENTS y la decisión de workflow; no implica una nueva autorización para commit o publicación.
+
 ## Límites
 
 No cubre migración del código, instalación de SDK/ORM, operaciones de backend, datos reales, push, PR ni despliegues. La estructura de módulos, mecanismo de acceso y modelo físico requieren aceptación específica antes de implementación.
