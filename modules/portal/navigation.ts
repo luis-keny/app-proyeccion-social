@@ -19,3 +19,6 @@ export function getViewPath(role: RoleSlug, view: WorkspaceView) {
   return `/workspace/${role}/${definition.segment}`;
 }
 export function getInitialPath(role: RoleSlug) { return getViewPath(role, role === "administrador" ? "overview" : "progress"); }
+export function getActivityPath(role: RoleSlug, activityId: string) {
+  return `${getViewPath(role, "activities")}/${encodeURIComponent(activityId)}`;
+}

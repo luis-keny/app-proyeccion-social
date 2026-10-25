@@ -4,5 +4,5 @@ import { requireWorkspaceRole, type WorkspaceRouteProps } from "@/modules/portal
 export const metadata: Metadata = { title: "Actividades | Proyección Social" };
 export default async function Page({ params }: WorkspaceRouteProps) {
   const role = await requireWorkspaceRole(params, "activities");
-  return <ActivitiesScreen role={role} />;
+  return <ActivitiesScreen role={role} referenceTime={new Date().toISOString()} />;
 }

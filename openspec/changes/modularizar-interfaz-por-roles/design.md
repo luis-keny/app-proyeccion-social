@@ -33,3 +33,21 @@ Extraer capacidades sin backend, sustituir el portal conmutado por rutas de vist
 ## Open Questions
 
 Las reglas de identidad, sesiones, crédito y roles pendientes siguen en el cambio de bases. Perfil, gestión de usuarios/roles y programación completa se definirán en siguientes iteraciones visuales; no inventar sus acciones.
+
+## Formulario, programación y horas
+
+Ordenar nombre, descripción, lugar y mapa antes de Programación y Validación de horas. Encabezados con fondo tenue, mayor altura e iconos; campos relacionados en dos columnas y etiquetas cortas. Preservar la estética y las primitivas instaladas.
+
+Separar centro del mapa y coordenadas seleccionadas. Pointer Events con captura distinguen arrastre de clic usando umbral técnico de 6 píxeles. Proyectar con Web Mercator, envolver longitud y limitar latitud; representar un círculo de 50 metros convertido según zoom/latitud. Zoom y atribución no seleccionan puntos. Flechas y Enter permiten explorar y seleccionar con teclado. El radio solo es referencia visual, sin permisos GPS ni regla de acreditación.
+
+Guardar regla de recurrencia junto con fechas derivadas: día único, diaria, semanal y personalizada con intervalo y días de lunes a domingo. Fechas DD/MM/AAAA sin Calendar visible. Fin inclusivo por fecha, cantidad o sin terminación. Calcular saltando a coincidencias, con hasta 366 jornadas finitas o una muestra de 366 en series abiertas, sin presentarla como total. Conservar una regla abierta permite backend futuro sin enumeración infinita.
+
+Horas por asistencia o total de bloque condicionado a mínimo/completo. Asistencia completa necesita una serie con fin; el mínimo no supera el total finito, y en series abiertas se limita a 366 para esta vista previa. La serie abierta por asistencia muestra valor unitario y no un máximo inventado. Correcciones, sesiones reales y efectos retroactivos quedan pendientes del backend. El horario HH:mm admite sugerencias de 15 minutos y escritura libre; las ruedas móviles se posponen.
+
+Usar transiciones de Base UI, duración CSS compartida y movimiento reducido. Montar raíz cerrada, abrir y desmontar solo al completar la salida, sin temporizadores de cierre.
+
+## Cards y consulta de actividad
+
+Crear `/workspace/[role]/actividades/[activityId]` con parámetros asíncronos y un componente cliente que resuelve por ID desde el proveedor. Centralizar URLs en navegación y formato de programación en presentation.ts. La referencia temporal del servidor evita diferencias de hidratación; la siguiente jornada se evalúa en Lima y para series abiertas se busca en la regla, incluso fuera de la muestra inicial.
+
+Cards con descripción recortada, badge unitario/total, lugar, siguiente fecha/horario, recurrencia y condición de horas. Footer con enlace de detalles y acción de registro según rol. El detalle presenta descripción sin recorte, metadatos, jornadas expandibles y mapa solo de consulta. Las series abiertas identifican su lista como muestra inicial. Mantener sidebar y migas coherentes y un estado recuperable para IDs ausentes tras recargar datos en memoria. Los ejemplos se completan con reglas/fechas deterministas, sin inventar datos de una actividad real.

@@ -17,3 +17,27 @@ El mensaje humano «okey comitea todo» autoriza crear un commit local con todos
 ## Resultado y cierre
 
 Aceptación del resultado y autorización de cierre pendientes. No sincronizar ni archivar automáticamente.
+
+## Ampliación autorizada: programación y horas
+
+Fuente: mensaje humano de esta conversación que solicita animaciones de entrada/salida de drawers y configurar días y validación de horas, con ejemplos de asistencia completa, 3 de 5 días o una hora por asistencia. Autoriza implementar localmente esta ampliación visual y documentarla en el cambio vigente. Se interpreta el mínimo como condición para obtener el total del bloque y el valor por asistencia como configurable. El resultado queda para revisión humana.
+
+Google Calendar y una vista de calendario propia se posponen expresamente. Se conservan los límites: datos en memoria, sin backend, dependencias nuevas, migraciones, operaciones remotas, commit, push, PR o despliegue. El permiso anterior de commit correspondió a aquella entrega, no autoriza uno nuevo. No hay aceptación de este resultado ni autorización de cierre.
+
+## Refinamiento de formulario, mapa y recurrencia
+
+Fuente: mensaje humano que solicita nombre, descripción, lugar y mapa en ese orden, arrastre con selección por clic y radio predeterminado de 50 metros; programación similar a Google Calendar sin componente Calendar visible, día único, diaria, semanal y personalizada, lunes a domingo, intervalo, rango o sin terminación; horarios con autocompletado y texto reducido en secciones diferenciadas.
+
+Autoriza estos cambios visuales locales en modalidad Show, conservando cambios previos del checkout. Acepta las tres opciones de validación de horas y solicita simplificar su presentación. Sustituye expresamente para esta interfaz la restricción de recurrencia siempre finita. Las ruedas móviles pueden quedar pendientes según su mensaje y así se registran. Integración con Google Calendar, backend y calendario propio siguen fuera del encargo; no autoriza commit, push, despliegue ni cierre.
+
+Interpretación implementada para revisión: asistencia completa requiere fin; las series abiertas admiten mínimo o crédito por asistencia y no muestran un máximo basado en la muestra de fechas. No se interpreta la conformidad parcial como aceptación del resultado completo ni autorización de archivo.
+
+## Cards y página de detalle
+
+El mensaje humano «ahora si esta mejor» expresa conformidad con el refinamiento visual anterior. Pide mostrar esa configuración en cards con información relevante y permite generar una vista de detalles. Autoriza implementar localmente cards resumidas y una página navegable de consulta por actividad para los tres roles, con sus pruebas y documentación. Se completan ejemplos locales para revisar las tres reglas de horas; no se modifican datos reales. Modalidad Show en el checkout actual, preservando lo pendiente.
+
+Esta conformidad no autoriza cierre/archivo del cambio completo ni commit, push, backend o despliegue. La nueva entrega sigue pendiente de aceptación humana.
+
+## Autorización de commit del conjunto actual
+
+Fuente: mensaje humano «comitea todo» después de la entrega de cards y detalle. Autoriza crear un commit local con todos los cambios pendientes del checkout actual en main, incluidos programación, horas, mapa, transiciones de drawers, cards, detalle, documentación y OpenSpec. Mantiene la modalidad Show y no requiere crear una rama. No autoriza push, despliegue ni cierre/archivo del cambio; no se interpreta el commit como aceptación final de todos los resultados.

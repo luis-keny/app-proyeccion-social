@@ -13,12 +13,14 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 
 type Props = {
   role: Role;
+  referenceTime: string;
+  getDetailsHref: (activity: SocialActivity) => string;
   activityList: SocialActivity[];
   onBeginAttendance: (activity: SocialActivity) => void;
   onSave: (draft: ActivityDraft, id: string | null) => void;
   onDelete: (id: string) => void;
 };
-export function ActivitiesView({ role, activityList, onBeginAttendance, onSave, onDelete }: Props) {
+export function ActivitiesView({ role, referenceTime, getDetailsHref, activityList, onBeginAttendance, onSave, onDelete }: Props) {
   const [query, setQuery] = useState("");
   const [editor, setEditor] = useState<{ activity: SocialActivity | null } | null>(null);
   const [pendingDelete, setPendingDelete] = useState<SocialActivity | null>(null);
@@ -34,10 +36,10 @@ export function ActivitiesView({ role, activityList, onBeginAttendance, onSave, 
           <div className="relative min-w-0 flex-1 sm:w-64">
             <Search className="absolute left-3 top-2.5 size-4 text-muted-foreground" />
             <Input className="pl-9" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Buscar actividad" />
-          </div>{role === "Administrador" && <Button onClick={() => setEditor({ activity: null })}>
+          </div>{role === "Administrador" && <Button onClick={() => setEditor((current) => current ?? { activity: null })}>
             <Plus className="mr-2 size-4" />Agregar actividad</Button>}</div>
       </div>
-      <div className="grid gap-4 md:grid-cols-3">{visibleActivities.map((activity) => <ActivityCard key={activity.id} activity={activity} role={role} onEdit={(item) => setEditor({ activity: item })} onDelete={setPendingDelete} onBeginAttendance={onBeginAttendance} />)}</div>{visibleActivities.length === 0 && <Card>
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{visibleActivities.map((activity) => <ActivityCard key={activity.id} activity={activity} role={role} referenceTime={referenceTime} detailsHref={getDetailsHref(activity)} onEdit={(item) => setEditor((current) => current ?? { activity: item })} onDelete={setPendingDelete} onBeginAttendance={onBeginAttendance} />)}</div>{visibleActivities.length === 0 && <Card>
         <CardContent className="py-8 text-center text-sm text-muted-foreground">No encontramos actividades con ese nombre.</CardContent>
       </Card>}</section>
     {editor && role === "Administrador" && <ActivityEditorDrawer activity={editor.activity} onClose={() => setEditor(null)} onSave={(draft) => onSave(draft, editor.activity?.id ?? null)} />}

@@ -67,3 +67,17 @@ Referencia: [SDK oficial](https://github.com/InsForge/InsForge-sdk-js/blob/main/
 El servidor determina operador, hora y crédito; el cliente no puede asignarse roles ni acreditar horas. El QR identifica, pero no autoriza ni sustituye confirmación humana. Definir formato, expiración y revocación antes de implementarlo.
 
 Los cambios de reglas requieren autorización e historial. La base de datos aplica integridad y permisos; la UI no constituye una frontera de seguridad. Ver [modelo de datos](database.md).
+
+## Programación en memoria
+
+`modules/activities/scheduling.ts` reúne la regla de recurrencia, validación de fechas, generación acotada de jornadas y resúmenes compartidos por editor/cards. El estado conserva fecha inicial, intervalo, días, terminación y horario, además de las fechas derivadas. Una serie abierta guarda su regla y una muestra finita, nunca un total definitivo. La generación salta directamente a días coincidentes para evitar recorrer intervalos vacíos.
+
+El editor compone programación y autocompletado horario mediante controles instalados; guarda descripción, coordenadas y radio de referencia con el resto de la actividad en el proveedor. El mapa separa el centro visible del punto elegido y distingue arrastre de clic con Pointer Events y captura de puntero. Las coordenadas se proyectan con Web Mercator; el círculo convierte metros a píxeles según latitud y zoom. No se añade SDK de mapas ni validación GPS.
+
+Los datos se conservan al navegar, sin persistencia ni crédito real. Los drawers usan transiciones de Base UI y el editor espera onOpenChangeComplete antes de desmontarse.
+
+## Consulta navegable de actividad
+
+La ruta `app/workspace/[role]/actividades/[activityId]/page.tsx` espera parámetros asíncronos, valida el rol visual y entrega identificador y referencia temporal serializables a `ActivityDetailsScreen`. El componente cliente resuelve la actividad por ID en el mismo proveedor del listado; no realiza lecturas de backend. Un ID ausente muestra un estado vacío recuperable.
+
+`getActivityPath` centraliza el enlace y codifica el identificador. WorkspaceShell reconoce la ruta hija, conserva la navegación activa y añade Detalle a las migas. `presentation.ts` comparte formato de recurrencia, terminación y siguiente jornada entre listado y detalle. La búsqueda de siguiente fecha en series abiertas usa la regla y no depende de la muestra inicial de 366 fechas. El mapa reutiliza la proyección y navegación existentes en modo de consulta, sin mutar coordenadas. Los fixtures generan sus fechas desde reglas deterministas para mantener coherencia entre badges, cards y detalle.

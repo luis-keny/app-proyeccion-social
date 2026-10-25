@@ -107,6 +107,32 @@
 }
 
 @layer base {
+  :root {
+    /* Tiempos compartidos de entrada y salida de los drawers. */
+    --drawer-enter-duration: 360ms;
+    --drawer-exit-duration: 240ms;
+  }
   * { @apply border-border outline-ring/50; }
   body { @apply bg-background text-foreground; }
+}
+
+@layer components {
+  .activity-form-section {
+    padding-top: 0.5rem;
+  }
+  .activity-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border-radius: var(--radius);
+    background: var(--muted);
+  }
+  .activity-section-title > svg {
+    width: 1rem;
+    height: 1rem;
+    color: var(--muted-foreground);
+  }
 }

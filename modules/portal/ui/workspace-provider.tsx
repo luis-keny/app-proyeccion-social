@@ -18,7 +18,7 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   const [selectedActivityId, setSelectedActivityId] = useState(INITIAL_ACTIVITIES[0].id);
   const selectedActivity = activities.find((item) => item.id === selectedActivityId) ?? activities[0];
   function saveActivity(draft: ActivityDraft, id: string | null) {
-    setActivities((current) => id ? current.map((item) => item.id === id ? { ...item, ...draft } : item) : [...current, { id: crypto.randomUUID(), ...draft, area: "Comunidad · Servicio", date: "Fecha por coordinar", time: "Por definir", icon: Activity }]);
+    setActivities((current) => id ? current.map((item) => item.id === id ? { ...item, ...draft } : item) : [...current, { id: crypto.randomUUID(), ...draft, area: "Comunidad · Servicio", icon: Activity }]);
   }
   return <WorkspaceContext.Provider value={{ activities, selectedActivity, selectActivity: (activity) => setSelectedActivityId(activity.id), saveActivity, removeActivity: (id) => setActivities((current) => current.filter((item) => item.id !== id)) }}>{children}</WorkspaceContext.Provider>;
 }

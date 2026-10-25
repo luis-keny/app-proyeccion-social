@@ -10,7 +10,7 @@ Las vistas son navegables mediante URLs por rol, enlaces e historial del navegad
 
 ## Alcance
 
-Una sola sede inicialmente, acceso institucional `@upeu.edu.pe`, sin inscripción ni reserva de cupos. La participación se determina por asistencia válida y acredita una cantidad fija de horas por sesión.
+Una sola sede inicialmente, acceso institucional `@upeu.edu.pe`, sin inscripción ni reserva de cupos. La participación se determina por asistencia válida. La interfaz configura horas por asistencia o un total condicionado a asistir a todas las jornadas o un mínimo, como se precisa en [configuración visual](#configuración-visual-de-actividades); su aplicación real sigue pendiente del backend.
 
 | Actor | Funciones |
 |---|---|
@@ -28,7 +28,7 @@ Escanear por sí solo no acredita horas. El alcance de cada asistente y las vent
 
 ## Actividades y sesiones
 
-Una actividad agrupa sesiones con horario y ubicación. Puede ser de un día o recurrente. Toda recurrencia termina en una fecha o después de una cantidad de ocurrencias; no existe la opción «nunca».
+Una actividad agrupa sesiones con horario y ubicación. Puede ser de un día o recurrente. La interfaz permite terminar una recurrencia por fecha, por cantidad de jornadas o dejarla sin fecha de fin. Esta ampliación visual sustituye la restricción inicial de recurrencia siempre finita; el tratamiento real de sesiones abiertas requiere definición antes del backend.
 
 El administrador controla borrador, publicada y cancelada. Próxima, en curso y finalizada se calculan a partir de la programación. Puede cancelarse toda la actividad o solo una sesión.
 
@@ -47,3 +47,13 @@ El administrador controla borrador, publicada y cancelada. Próxima, en curso y 
 No se contempla por ahora separación multi-sede, entrada/salida, sincronización offline, certificados, pagos ni aplicación móvil nativa. Una cuenta institucional no demuestra por sí sola que su titular sea estudiante vigente.
 
 Los escenarios detallados están en las especificaciones del [cambio de bases](../openspec/changes/establecer-bases/proposal.md). Las reglas sin resolver se mantienen en sus [preguntas](../openspec/changes/establecer-bases/questions.md).
+
+## Configuración visual de actividades
+
+El editor recoge nombre, descripción y lugar con un punto y radio visual de 50 metros en el mapa. Ofrece día único o recurrencia diaria, semanal y personalizada, con intervalo, días semanales y terminación configurable. El [contrato visual](design.md#programación-y-validación-visual-de-horas) detalla controles, límites y condiciones de horas por asistencia completa, mínimo de jornadas o cada asistencia. La asistencia completa requiere una serie con fin.
+
+Esta ampliación reemplaza las restricciones visuales iniciales de crédito fijo por sesión y recurrencia finita; su aplicación real y tratamiento del historial siguen pendientes antes del backend. Integrar Google Calendar o construir una vista propia de calendario queda para después, al igual que las ruedas de reloj móviles.
+
+## Consulta de actividades
+
+Las cards sintetizan ubicación, próxima jornada, recurrencia y condiciones de horas. Ver detalles abre una página por actividad para los tres roles con descripción completa, programación, jornadas y mapa de consulta. El registro conserva la actividad seleccionada para asistente/administrador; no se añaden inscripciones. La disponibilidad del detalle depende del estado en memoria: los ejemplos se recuperan al recargar y las actividades creadas durante la sesión no persisten. Ver [diseño de cards y detalle](design.md#cards-y-detalle-de-actividades).

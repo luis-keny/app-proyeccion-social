@@ -1,6 +1,6 @@
 # Proyección Social · UPeU
 
-Sistema para consultar actividades, registrar asistencia y acreditar horas de proyección social. El alcance inicial es una sola sede, sin inscripción previa y con crédito fijo por sesión asistida.
+Sistema para consultar actividades, registrar asistencia y acreditar horas de proyección social. El alcance inicial es una sola sede, sin inscripción previa. El editor visual permite programar jornadas y configurar horas por asistencia, asistencia completa o un mínimo de jornadas; la acreditación real sigue pendiente.
 
 **Estado:** aplicación en construcción, en etapa visual por roles y módulos, con datos de ejemplo en memoria. Autenticación, persistencia y permisos reales aún no están implementados/verificados.
 

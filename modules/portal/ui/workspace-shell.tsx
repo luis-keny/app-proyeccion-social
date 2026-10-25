@@ -17,7 +17,9 @@ export function WorkspaceShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const role = params.role && isRoleSlug(params.role) ? params.role : "estudiante";
-  const currentView = navigation.find((item) => getViewPath(role, item.id) === pathname && item.roles.includes(role));
+  const activityPath = getViewPath(role, "activities");
+  const activityDetail = pathname.startsWith(`${activityPath}/`) && pathname.slice(activityPath.length + 1).split("/").length === 1;
+  const currentView = navigation.find((item) => (getViewPath(role, item.id) === pathname || (activityDetail && item.id === "activities")) && item.roles.includes(role));
   const items = navigation.filter((item) => item.roles.includes(role)).map((item) => ({ title: item.label, url: getViewPath(role, item.id), icon: <item.icon />, isActive: currentView?.id === item.id }));
   const user = { name: role === "administrador" ? "Coordinación PS" : "Daniela Rojas", detail: ROLE_LABELS[role], initials: role === "administrador" ? "AD" : "DR" };
   return <SidebarProvider>
@@ -34,8 +36,9 @@ export function WorkspaceShell({ children }: { children: ReactNode }) {
               </BreadcrumbItem>
               <BreadcrumbSeparator className="hidden sm:block" />
               <BreadcrumbItem>
-                <BreadcrumbPage>{currentView?.label ?? "Página no disponible"}</BreadcrumbPage>
+                {activityDetail ? <BreadcrumbLink render={<Link href={activityPath} />}>Actividades</BreadcrumbLink> : <BreadcrumbPage>{currentView?.label ?? "Página no disponible"}</BreadcrumbPage>}
               </BreadcrumbItem>
+              {activityDetail && <><BreadcrumbSeparator /><BreadcrumbItem><BreadcrumbPage>Detalle</BreadcrumbPage></BreadcrumbItem></>}
             </BreadcrumbList>
           </Breadcrumb>
         </div>
@@ -51,7 +54,7 @@ export function WorkspaceShell({ children }: { children: ReactNode }) {
       <div className="flex flex-1 flex-col gap-6 p-4 md:p-6">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="flex flex-col gap-2">
-            <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">{currentView?.title ?? "Página no disponible"}</h1>{currentView && <p className="text-sm text-muted-foreground">{currentView.description}</p>}</div>
+            <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">{activityDetail ? "Detalle de actividad" : currentView?.title ?? "Página no disponible"}</h1>{currentView && <p className="text-sm text-muted-foreground">{activityDetail ? "Revisa la programación, el punto de encuentro y las condiciones de horas." : currentView.description}</p>}</div>
           <Badge variant="secondary">{ROLE_LABELS[role]}</Badge>
         </div>
         <div className="min-w-0 flex-1">{children}</div>
