@@ -34,11 +34,11 @@ export type StudentReportItem = {
   faculty: string;
   email: string;
   currentSemesterLabel: string;
-  annualGoalHours: number;
+  assignedGoalHours: number;
   cycles: Record<CycleCode, CycleSummary>;
   activities: StudentActivityLog[];
 } & (
-  | { participantType: "student"; studentCode: string }
+  | { participantType: "student"; studentCode: string; admissionYear: number; currentCycle: number; careerCycles: number }
   | { participantType: "beneficiary"; studentCode: null }
 );
 
@@ -56,11 +56,12 @@ export const STUDENTS_DATA: StudentReportItem[] = [
     initials: "DR",
     participantType: "student",
     studentCode: "202310482",
+    admissionYear: 2023, currentCycle: 7, careerCycles: 10,
     dni: "74829103",
     faculty: "Psicología",
     email: "daniela.rojas@upeu.edu.pe",
     currentSemesterLabel: "VII Ciclo",
-    annualGoalHours: 160,
+    assignedGoalHours: 50,
     cycles: {
       "2025-I": {
         cycle: "2025-I",
@@ -246,11 +247,12 @@ export const STUDENTS_DATA: StudentReportItem[] = [
     initials: "MV",
     participantType: "student",
     studentCode: "202210894",
+    admissionYear: 2022, currentCycle: 8, careerCycles: 10,
     dni: "72910485",
     faculty: "Ingeniería de Sistemas",
     email: "mateo.valdivia@upeu.edu.pe",
     currentSemesterLabel: "VIII Ciclo",
-    annualGoalHours: 160,
+    assignedGoalHours: 160,
     cycles: {
       "2025-I": {
         cycle: "2025-I",
@@ -384,11 +386,12 @@ export const STUDENTS_DATA: StudentReportItem[] = [
     initials: "CP",
     participantType: "student",
     studentCode: "202320115",
+    admissionYear: 2023, currentCycle: 6, careerCycles: 10,
     dni: "75103948",
     faculty: "Medicina Humana",
     email: "camila.paredes@upeu.edu.pe",
     currentSemesterLabel: "VI Ciclo",
-    annualGoalHours: 160,
+    assignedGoalHours: 50,
     cycles: {
       "2025-I": {
         cycle: "2025-I",
@@ -522,11 +525,12 @@ export const STUDENTS_DATA: StudentReportItem[] = [
     initials: "SM",
     participantType: "student",
     studentCode: "202410309",
+    admissionYear: 2024, currentCycle: 5, careerCycles: 10,
     dni: "76482019",
     faculty: "Administración y Negocios",
     email: "sebastian.mendoza@upeu.edu.pe",
     currentSemesterLabel: "V Ciclo",
-    annualGoalHours: 160,
+    assignedGoalHours: 50,
     cycles: {
       "2025-I": {
         cycle: "2025-I",
@@ -647,11 +651,12 @@ export const STUDENTS_DATA: StudentReportItem[] = [
     initials: "LF",
     participantType: "student",
     studentCode: "202220512",
+    admissionYear: 2022, currentCycle: 8, careerCycles: 10,
     dni: "71839204",
     faculty: "Arquitectura y Urbanismo",
     email: "lucia.fernandez@upeu.edu.pe",
     currentSemesterLabel: "VIII Ciclo",
-    annualGoalHours: 160,
+    assignedGoalHours: 160,
     cycles: {
       "2025-I": {
         cycle: "2025-I",
@@ -785,11 +790,12 @@ export const STUDENTS_DATA: StudentReportItem[] = [
     initials: "DQ",
     participantType: "student",
     studentCode: "202310771",
+    admissionYear: 2023, currentCycle: 7, careerCycles: 10,
     dni: "73920184",
     faculty: "Enfermería",
     email: "diego.quispe@upeu.edu.pe",
     currentSemesterLabel: "VII Ciclo",
-    annualGoalHours: 160,
+    assignedGoalHours: 50,
     cycles: {
       "2025-I": {
         cycle: "2025-I",
@@ -945,7 +951,7 @@ function createBeneficiaryExample(
     studentCode: null,
     faculty: "Personas externas",
     currentSemesterLabel: "",
-    annualGoalHours: EXAMPLE_CYCLE_GOAL_HOURS * ALL_CYCLES.length,
+    assignedGoalHours: EXAMPLE_CYCLE_GOAL_HOURS * ALL_CYCLES.length,
     cycles: Object.fromEntries(summaries.map((summary) => [summary.cycle, summary])) as Record<CycleCode, CycleSummary>,
     activities: summaries.map((summary): StudentActivityLog => ({
       id: identity.id + "-" + summary.cycle,

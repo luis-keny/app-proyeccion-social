@@ -46,6 +46,16 @@ El administrador controla borrador, publicada y cancelada. Próxima, en curso y 
 
 No se contempla por ahora separación multi-sede, entrada/salida, sincronización offline, certificados, pagos ni aplicación móvil nativa. Una cuenta institucional no demuestra por sí sola que su titular sea estudiante vigente.
 
+## Metas individuales y seguimiento administrativo
+
+La etapa visual asigna a cada estudiante una meta total según la regla vigente para su año de ingreso. Cada regla tiene un año inicial y continúa hasta el año anterior al inicio de la siguiente: 50 horas desde 2023 cubre 2023–2025 cuando existe otra de 120 horas desde 2026, que cubre 2026 en adelante. No se configura cada año por separado. Agregar o editar reglas conserva las metas ya asignadas. Estos valores son ejemplos de la definición humana, no un catálogo institucional completo.
+
+Las horas esperadas se calculan como meta individual dividida entre ciclos de la carrera y multiplicada por ciclo actual. Un estudiante está observado si sus horas acumuladas son menores a ese resultado, independientemente de si ingresó desde primer ciclo y sin prorratear el ciclo en curso. Se compara con su ritmo esperado, no con otros estudiantes. La brecha es la diferencia positiva entre horas esperadas y realizadas. Esta regla académica no se aplica a beneficiarios externos.
+
+Reporte de alumnos permite configurar vigencias de metas y agregar estudiantes o beneficiarios individualmente o mediante plantilla XLSX, con revisión previa de errores y duplicados. Las altas comienzan sin horas ni asistencias; no sobrescriben personas existentes. Participantes y reglas se conservan durante la navegación y se reinician al recargar. No se implementa reasignación de metas existentes, persistencia ni acreditación real. Ver [diseño de los flujos](design.md#metas-y-alta-de-participantes).
+
+Resumen general presenta avance académico individual, observados, metas completas y estudiantes en último ciclo con meta pendiente, sin tabla de estudiantes, eje social ni evolución de horas. La participación cuenta estudiantes únicos con registros de ejemplo validados en el periodo indicado. Los objetivos de gestión mostrados son propuestas, sin metas institucionales numéricas aceptadas.
+
 Los escenarios detallados están en las especificaciones del [cambio de bases](../openspec/changes/establecer-bases/proposal.md). Las reglas sin resolver se mantienen en sus [preguntas](../openspec/changes/establecer-bases/questions.md).
 
 ## Configuración visual de actividades

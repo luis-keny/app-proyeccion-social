@@ -1,5 +1,11 @@
 # Preguntas pendientes
 
+## Metas y altas de participantes
+
+La aclaración humana resuelve la vigencia: una meta desde un año de ingreso continúa hasta la siguiente regla, sin configurar cada año por separado. Las metas individuales previamente asignadas se conservan. La etapa visual admite altas con nombre/DNI y datos académicos de estudiantes; para XLSX usa la plantilla documentada, detecta duplicados por DNI/código y exige corregir todas las filas antes de importar. Estas decisiones de presentación no fijan identidad, permisos ni integración con padrón real.
+
+Reasignación de metas individuales ya existentes, excepciones institucionales, importación de horas históricas y obtención/actualización real de ciclo académico requieren definición independiente. No bloquean esta iteración visual sin backend.
+
 No hay preguntas bloqueantes para separar las vistas existentes y aplicar las reglas de diseño indicadas. La matriz implementada no agota el producto: las siguientes vistas y acciones se revisarán con el humano.
 
 Las decisiones funcionales sin resolver conservan su ubicación en [las preguntas de bases](../establecer-bases/questions.md).

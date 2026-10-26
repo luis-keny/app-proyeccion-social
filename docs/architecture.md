@@ -13,7 +13,7 @@ modules/
   activities/           # Modelo visual, fixtures, listado, editor y mapa
   attendance/           # Vista de registro y ciclo de cámara/GPS
   students/             # Vistas de progreso y QR de ejemplo
-  reports/              # Fixtures y vista de dashboard/reporte
+  reports/              # Participantes, metas, importación local y vistas de resumen/reporte
 components/ui/          # Primitivas compartidas
 lib/                    # Utilidades e infraestructura transversal mínima
 ```
@@ -29,6 +29,10 @@ Cada capacidad dispone de un `page.tsx` bajo `app/workspace/[role]/`: `progreso`
 El proveedor de workspace conserva actividades y selección al navegar entre vistas o roles y usar el historial del navegador. Recargar reinicia los fixtures. Cada vista conserva sus filtros y estado transitorio solo mientras está montada. Actividades usa identificadores estables, editor en Drawer derecho y AlertDialog para eliminar. Asistencia libera la cámara al salir o cambiar de actividad y muestra estado vacío si no quedan registros. Reportes conserva su presentación con fixtures separados.
 
 Los módulos futuros de identidad, sesiones/recurrencia y la integración real requieren definición específica. La navegación por rol es presentación; no sustituye permisos de servidor. Ver [diseño](design.md).
+
+ReportsProvider conserva por separado participantes y reglas de metas en el layout de workspace, compartidos entre resumen y reporte. Navegación e historial mantienen sus datos; recargar reinicia ejemplos. participants.ts reúne selección de la última vigencia aplicable al ingreso, validación de alta/duplicados y avance esperado. Guardar reglas no reescribe metas individuales. Resumen y tabla derivan el estado académico del acumulado con la misma función y excluyen beneficiarios de las reglas académicas.
+
+workbook-import.ts procesa solo la plantilla XLSX en el navegador mediante descompresión y XML nativos. No añade dependencias, sube archivos ni ejecuta fórmulas. ParticipantActions presenta alta, vigencias e importación en drawers compartidos. La importación revisa todas las filas antes de una única adición en memoria, sin reemplazos ni horas históricas. public/templates/participantes.xlsx es el recurso de plantilla descargable. Ver contrato, validación y límites en [diseño](design.md#metas-y-alta-de-participantes).
 
 | Área | Responsabilidad | Dependencias |
 |---|---|---|

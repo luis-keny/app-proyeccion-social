@@ -1,8 +1,94 @@
 ## ADDED Requirements
 
+### Requirement: Gráficos administrativos comparables
+
+Resumen general SHALL presentar barras de avance por escuela al 100%, dona de estados excluyentes y barra de participación del periodo. SHALL usar los agregados actuales, excluir beneficiarios del avance académico y conservar indicadores/accesos. SHALL mostrar cantidades/leyendas y estados vacíos, sin evolución por ciclos ni eje social.
+
+#### Scenario: Distribución sin doble conteo
+
+- **WHEN** se consulta la dona de situación académica
+- **THEN** Meta completa, Al día sin completar y Observados suman exactamente el total de estudiantes sin solaparse
+
+#### Scenario: Comparar escuelas
+
+- **WHEN** se consulta una barra de escuela
+- **THEN** al día y observados completan el 100% de su población y el tooltip conserva nombre completo, cantidades y brecha media entre observados; una tabla para lectores de pantalla ofrece los mismos datos
+
+#### Scenario: Participación y ausencia de datos
+
+- **WHEN** se consulta participación del periodo o no hay estudiantes
+- **THEN** se cuentan personas únicas con/sin asistencia validada y se excluyen beneficiarios; sin estudiantes se muestra un estado vacío sin inventar un porcentaje
+
+### Requirement: Metas con vigencia continua
+
+El administrador SHALL configurar una meta total vigente desde un año de ingreso en un drawer derecho desde Reporte de alumnos. Una regla SHALL aplicar a todos los años posteriores hasta el año anterior al inicio de la siguiente regla. Alta individual e importación SHALL elegir la regla con mayor año inicial que no exceda el año de ingreso. Agregar o editar reglas MUST NOT modificar metas individuales ya asignadas. Sin regla aplicable, SHALL bloquearse el alta del estudiante.
+
+#### Scenario: Mantener una meta entre cambios de requisito
+
+- **GIVEN** reglas desde 2023 con 50 h y desde 2026 con 120 h
+- **WHEN** se agrega un estudiante de 2024, 2025, 2026 o 2027
+- **THEN** se le asignan respectivamente 50, 50, 120 o 120 h sin configurar reglas por cada año
+
+#### Scenario: Insertar una nueva vigencia
+
+- **GIVEN** las reglas anteriores y estudiantes ya registrados con su meta individual
+- **WHEN** se configura otra meta desde 2028
+- **THEN** nuevas altas de 2026 y 2027 conservan la regla de 2026, desde 2028 usan la nueva y ningún estudiante previo cambia su meta
+
+### Requirement: Alta de estudiantes y beneficiarios
+
+Reporte de alumnos SHALL ofrecer Agregar participante en drawer derecho. Ambos tipos SHALL requerir nombre y DNI de ocho dígitos. Estudiantes SHALL requerir código, escuela, año de ingreso y ciclos actual/de carrera enteros positivos con actual no mayor al total. Beneficiarios MUST NOT recibir datos académicos ni clasificación Observado.
+
+#### Scenario: Agregar sin acreditar horas
+
+- **WHEN** se confirma una persona válida con identificadores no repetidos
+- **THEN** aparece con cero horas, sin asistencias y con meta vigente solo si es estudiante; se conserva al navegar y se reinicia al recargar
+
+### Requirement: Identificadores únicos de participantes
+
+El DNI SHALL ser único entre participantes y el código entre estudiantes sin distinguir mayúsculas. Alta individual e importación SHALL compartir esta validación y conservar los identificadores como texto.
+
+#### Scenario: Identificador repetido
+
+- **WHEN** una persona tiene el DNI de otro participante o un estudiante repite código
+- **THEN** se rechaza el alta y se identifica el campo repetido sin modificar datos existentes
+
+### Requirement: Importación local revisable de XLSX
+
+Reporte de alumnos SHALL ofrecer Importar Excel con plantilla, selección de XLSX, vista previa de personas/metas/errores por fila y confirmación. SHALL aplicar las reglas del alta individual e invalidar todas las apariciones de identificadores repetidos. SHALL agregar el archivo completo solo cuando todas las filas sean válidas. MUST NOT sobrescribir registros, acreditar horas ni enviar el archivo a un servidor.
+
+#### Scenario: Revisar archivo con errores o duplicados
+
+- **WHEN** una fila tiene datos inválidos, falta una meta vigente o repite un identificador
+- **THEN** la vista previa muestra su número de fila y errores, bloquea confirmar y no agrega ninguna persona hasta corregir y volver a cargar el archivo
+
+#### Scenario: Archivo compatible
+
+- **WHEN** se carga un XLSX de hasta 5 MB y 1000 personas, sin fórmulas ni macros y con la hoja Participantes y columnas tipo, nombre, dni, codigo, escuela, anio_ingreso, ciclo_actual, ciclos_carrera en ese orden
+- **THEN** se revisan sus valores y se conservan ceros iniciales de DNI/códigos almacenados como texto; se rechazan formatos XLS/XLSM, columnas adicionales con datos y libros no compatibles
+
+### Requirement: Resumen administrativo orientado al seguimiento
+
+Resumen general SHALL omitir tabla de estudiantes, eje social y evolución de horas por ciclos. SHALL mostrar al día, observados, meta total cumplida, último ciclo pendiente, avance por escuela, atención prioritaria y oportunidades. Participación SHALL contar estudiantes únicos con asistencia de ejemplo validada en el periodo indicado, sin afirmar validación real de QR/GPS.
+
+#### Scenario: Consultar el dashboard
+
+- **WHEN** se abre Resumen general
+- **THEN** aparecen indicadores y agrupación por escuela sin tabla individual, eje social ni evolución por ciclos
+
+### Requirement: Avance esperado individual
+
+Las horas esperadas SHALL ser meta individual dividida entre ciclos de carrera y multiplicada por ciclo actual, sin ajuste por ingreso posterior ni prorrateo del ciclo. Observado SHALL significar acumulado estrictamente menor al esperado. Beneficiarios SHALL quedar excluidos del cálculo académico.
+
+#### Scenario: Observar por avance individual
+
+- **GIVEN** meta de 50 h, carrera de diez ciclos y estudiante en octavo con 35 h
+- **WHEN** se consulta su avance
+- **THEN** se esperan 40 h, está observado con brecha de 5 h y deja de estar observado al alcanzar exactamente 40 h
+
 ### Requirement: Reporte administrativo compacto
 
-La tabla administrativa SHALL mostrar nombre, código para estudiantes o DNI para beneficiarios externos, horas realizadas/horas totales y únicamente horas realizadas por ciclo. SHALL omitir carrera, ciclo actual, correo y métricas auxiliares por ciclo. El nombre SHALL abrir el detalle sin padding adicional en el botón y sin columna ni acción separada de detalle. SHALL conservar los filtros existentes de búsqueda, escuela, año y estado.
+La tabla SHALL mostrar nombre, código de estudiante o DNI externo, realizadas/meta asignada para estudiantes, solo realizadas para beneficiarios y horas por ciclo. SHALL omitir carrera, ciclo actual, correo y métricas auxiliares. El nombre SHALL abrir detalle sin padding adicional ni columna/acción separada. SHALL conservar búsqueda, escuela, año y estado.
 
 #### Scenario: Consultar horas y abrir detalle
 

@@ -1,5 +1,29 @@
 # Revisión humana
 
+## Commit autorizado de metas, participantes y gráficos
+
+Fuente: mensaje humano «comitea todo» después de la entrega del dashboard con gráficos. Autoriza un commit local con todos los cambios pendientes en main: metas con vigencia continua, alta/importación de estudiantes y beneficiarios, plantilla XLSX, estado compartido, resumen gráfico y documentación/OpenSpec. Modalidad Show en el checkout actual. No autoriza push, despliegue ni cierre/archivo del cambio; el commit no sustituye la aceptación final del resultado completo.
+
+## Gráficos autorizados para Resumen general
+
+Fuente: mensaje humano «okey eso de resumen general, podemos agregar graficos en lugar de solo textos». Autoriza mejorar visualmente el dashboard con gráficos sobre los indicadores ya acordados. Modalidad Show en el checkout actual, preservando todos los cambios pendientes y sin baseline consolidada. Se concretan barras por escuela, dona de estados excluyentes y barra de participación, conservando métricas, atención y enlaces. Sin nuevas dependencias, backend, datos reales, commit, push ni despliegue. Aceptación del resultado y autorización de cierre pendientes.
+
+## Implementación autorizada de metas, participantes y resumen
+
+La aclaración humana posterior confirma vigencia continua: configurar una meta desde 2023 debe cubrir años posteriores hasta configurar otra distinta desde un año nuevo. Sustituye la interpretación inicial de una regla exacta por cada año. Se aplica la última vigencia que no excede el ingreso y se preservan las metas asignadas previamente, en alta individual e importación.
+
+Fuente: mensaje humano «dale» tras la propuesta de Configurar metas, Agregar participante e Importar Excel en Reporte de alumnos. Acepta esa propuesta y autoriza la implementación visual local, junto con las reglas de metas y observados confirmadas en esta conversación. Se atienden también las retiradas solicitadas del resumen: eje social, evolución de horas y tabla de estudiantes integrada. Modalidad Show sobre el checkout actual, preservando la definición documental pendiente. Sin baseline consolidada.
+
+La importación propuesta agrega personas sin sobrescribir registros ni acreditar horas; se concreta con plantilla XLSX, validación compartida con el alta y confirmación de todo el archivo solo cuando todas sus filas son válidas. Los duplicados se detectan por DNI entre participantes y por código entre estudiantes. Configurar metas afecta nuevas altas por año de ingreso y conserva las metas ya asignadas. No se implementa reasignación individual o masiva de metas existentes en esta entrega.
+
+Datos locales en memoria, sin backend, nuevas dependencias, datos reales, commit, push, PR ni despliegue. La lectura XLSX usa APIs del navegador y la plantilla es un recurso estático. Aceptación del resultado y autorización de cierre pendientes.
+
+## Definición de metas y administración de participantes
+
+Fuente: conversación humana que confirma metas individuales conservadas por grupo de ingreso (ejemplos de 50 y 120 horas), observados por debajo del promedio esperado según meta y ciclo actual, sin considerar si ingresaron desde primer ciclo. La respuesta «si» confirma la interpretación de nuevos ingresos de 2026. Solicita configuración de metas, que puede quedar dentro de Reporte de alumnos, y botones para importar Excel y agregar estudiantes y beneficiarios.
+
+Se registra la definición funcional y una propuesta de ubicación y flujo en docs/product.md y docs/design.md dentro del encargo de definición. Modalidad Ask para decisiones pendientes de importación y asignación; esta tarea solo modifica documentación. No existe baseline consolidada. Ubicación en drawers, campos y vista previa son propuesta de diseño, no software entregado ni aceptación humana de esos detalles. No se infiere autorización de dependencias, datos reales, backend, commit, push, despliegue ni cierre. Implementación visual y aceptación del resultado pendientes.
+
 ## Commit autorizado de los ajustes visuales actuales
 
 Fuente: mensaje humano «comitea todos los cambios realizados actualmente». Autoriza un commit local de todos los cambios pendientes en main: simplificación del reporte, códigos sin sufijos, iconos por tipo, beneficiarios y voluntariados de ejemplo, retirada del área en cards y su documentación/OpenSpec. Modalidad Ship en el checkout actual. No autoriza push, despliegue ni cierre/archivo del cambio; el commit no sustituye la aceptación final del resultado.

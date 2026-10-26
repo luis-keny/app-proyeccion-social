@@ -12,6 +12,16 @@ El usuario solicita pasar de la demo a una aplicación, empezando por organizar 
 - Mantener datos de ejemplo explícitos durante esta etapa visual.
 - Documentar y aplicar controles del sistema de componentes, drawers derechos para altas/ediciones y confirmación destructiva roja para eliminar.
 
+## Metas, participantes y resumen administrativo
+
+Configurar metas vigentes desde un año de ingreso hasta el inicio de la siguiente regla, agregar estudiantes/beneficiarios y revisar archivos XLSX desde drawers derechos en Reporte de alumnos. No se requiere configurar cada año: las altas asignan la última regla que no exceda su ingreso; cambiarla no cambia metas anteriores. Se detectan duplicados por DNI y código y se bloquea la importación completa si alguna fila es inválida. No se importan horas ni asistencias.
+
+Separar el resumen de la tabla del reporte; retirar evolución por ciclos y eje social. Mostrar avance respecto a meta individual, observados, metas completas y último ciclo con meta pendiente, agrupación por escuela y oportunidades programadas. Beneficiarios excluidos del cálculo académico. Estado compartido en memoria durante la navegación, sin backend ni dependencias nuevas.
+
+## Gráficos de seguimiento
+
+Presentar el avance por escuela con barras apiladas al 100%, la situación académica con dona de grupos excluyentes y la participación del periodo con una barra con/sin participación. Reutilizar ChartContainer y Recharts instalados. Conservar cantidades, leyendas, tooltips con nombres completos y brecha, alternativas accesibles y estados vacíos, sin cambiar reglas ni añadir series de evolución o ejes sociales.
+
 ## Capabilities
 
 ### New Capabilities

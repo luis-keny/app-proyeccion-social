@@ -1,5 +1,49 @@
 # Trabajo de interfaz modular
 
+## Commit del resumen, metas y participantes
+
+- Autorización humana «comitea todo» registrada en review.md para el conjunto pendiente en main, sin push ni archivo de OpenSpec.
+- Inventario revisado: rutas y proveedor compartido, metas individuales/vigencias, alta e importación local de participantes, plantilla XLSX de ejemplo, resumen con gráficos y documentación/specs. No hay archivos de entorno ni nuevas dependencias en el conjunto.
+- Se conservan las comprobaciones de implementación y navegador registradas más abajo. Solo se añade el registro documental de commit; no se altera código tras los checks. Se comprueban nuevamente OpenSpec y whitespace al preparar el commit.
+
+## Gráficos de Resumen general
+
+- [x] Registrar autorización humana y conservar el alcance visual en memoria, sin dependencias nuevas.
+- [x] Sustituir tabla visible de escuelas por barras apiladas al 100% con tooltip de cantidades y brecha.
+- [x] Añadir dona de estados académicos excluyentes y barra con/sin participación del periodo.
+- [x] Conservar indicadores, atención, enlaces y próximos eventos; actualizar docs/design.md, diseño y delta spec.
+- [x] Completar verificación final de gráficos y registrar resultados.
+
+### Evidencia de gráficos
+
+- TypeScript sin errores; lint de los dos componentes afectados sin errores ni advertencias. Build con webpack correcto: compilación, tipos y generación de rutas completos. Se ejecutó fuera del sandbox con aprobación del revisor automático por el bloqueo de .next ya observado. Sin nuevas dependencias ni cambios de configuración.
+- Navegador local de producción: tres gráficos SVG renderizados. Escuelas muestra seis barras; el tooltip de Administración y Negocios conserva nombre completo, 1 estudiante al día, 0 observados y brecha 0 h. Dona muestra seis estudiantes: 5 con meta completa, 1 al día sin completar y 0 observados, sin doble conteo. Participación muestra seis personas únicas con asistencia validada de ejemplo y cero sin ella. Beneficiarios excluidos de esos agregados.
+- Capturas de barras y dona inspeccionadas visualmente; leyendas con texto, cantidades y porcentajes. Consola sin errores ni advertencias. Se detectó desbordamiento de la tabla accesible y se corrigió aplicando el recorte a un contenedor, conservando su semántica. Verificación final: ancho de página 826 px y viewport 826 px, sin desbordamiento horizontal; gráficos apilados en este ancho. No se probó un viewport móvil independiente.
+- OpenSpec estricto: dos cambios válidos, cero fallos; git diff --check sin errores. docs/design.md, propuesta, diseño y review actualizados. Se conservan cambios previos del checkout. Sin backend, datos reales, commit, push ni despliegue. Aceptación del resultado y cierre pendientes.
+
+## Definición de metas y alta de participantes
+
+- [x] Registrar regla de metas individuales y observados confirmada por el humano en docs/product.md.
+- [x] Proponer configuración de metas, alta individual e importación en Reporte de alumnos en docs/design.md, distinguiendo definición de implementación.
+- [x] Concretar plantilla Excel, duplicados, campos obligatorios y bloqueo de archivos con filas inválidas; reasignación de metas individuales existentes queda fuera de la entrega.
+- [x] Preparar delta specs y diseño técnico de las acciones visuales y la vigencia continua aclarada por el humano.
+- [x] Implementar acciones visuales, lectura XLSX nativa sin nuevas dependencias y estado en memoria compartido con el resumen.
+- [x] Separar resumen de la tabla y retirar eje social/evolución; aplicar meta individual a observados y filtros.
+- [x] Verificar vigencia por intervalos, alta, importación real de plantilla y navegación; registrar evidencia y límites.
+
+Validación de esta definición: revisión de coherencia y destinos de enlaces entre producto y diseño; git diff --check sin errores. OpenSpec validate --all --strict: dos cambios válidos, cero fallos, ejecutado con Node explícito porque el shim nvm no tiene versión activa. No se modifica código ni se ejecutan lint/build para esta tarea documental. La baseline consolidada sigue pendiente. Aceptación del diseño propuesto y entrega visual pendientes.
+
+### Evidencia de implementación de metas y participantes
+
+- Modalidad Show en el checkout actual, sin commits ni dependencias nuevas. Autorización «dale» y aclaración humana de vigencia continua registradas en review.md. Las decisiones visuales de plantilla/validación se concretan en diseño y delta spec; las reglas no son permisos reales.
+- TypeScript sin errores. Lint completo sin errores, con las mismas cuatro advertencias previas de plantillas de skills y tiles de mapa. Build final con webpack correcto, compilación/tipos/generación de rutas completos. El primer build dentro del sandbox falló por EPERM en .next; se completó fuera con aprobación del revisor automático, sin cambiar configuración. Servidor local de producción para revisión, sin despliegue.
+- Script local de comprobación de reglas: 2023/2024/2025 asignan 50 h; 2026/2027/2035 asignan 120 h; insertar otra vigencia en 2030 conserva 120 h en 2029 y asigna la nueva desde 2030, independientemente del orden de las reglas. Año anterior a la primera vigencia no recibe meta inventada. Ejemplo 50 h, diez ciclos, octavo: 35 h observado/brecha 5, 40 h al día y 50 h meta cumplida. Verificados DNI/código repetidos, duplicados dentro del archivo, código sin distinción de mayúsculas, ciclo inválido y beneficiarios fuera del cálculo académico. Script de verificación fuera del repositorio; sin nuevo runner.
+- Navegador local: alta de estudiante de 2023 en octavo asignó 50 h y agregó cero horas; modificar la regla conservó esa meta en el registro anterior. Plantilla XLSX leída con vista previa de estudiante/meta 120 h y beneficiario sin meta; preservó DNI 00000011 y 00000012. Confirmar agregó ambas personas y navegar al resumen conservó los registros; dashboard contó estudiantes únicos y excluyó beneficiarios. La lectura de XLSX real se comprobó antes del refinamiento de vigencias; la selección de regla corregida usa la misma validación compartida comprobada por el script.
+- Versión corregida revisada en navegador: tabla de metas muestra 2023–2025/50 h y 2026 en adelante/120 h, sin filas de configuración por cada año. Alta con ingreso 2027 muestra 120 h sin regla adicional. Captura de configuración inspeccionada. Se protegió el cierre de paneles para evitar que una apertura durante la animación de salida reutilice el drawer anterior.
+- Plantilla creada con runtime de hojas disponible, inspeccionada y comprobada por XML exportado: DNI y códigos como texto con ceros iniciales conservados, ocho columnas, dos ejemplos e instrucciones separadas. La plantilla no contiene fórmulas ni datos reales. No se probó exhaustivamente interoperabilidad con todas las versiones de Excel ni archivos corruptos; la implementación comunica los límites admitidos.
+- OpenSpec estricto: dos cambios válidos y cero fallos. Destinos de enlaces locales revisados en nueve documentos sin faltantes. git diff --check sin errores. CLI shadcn no pudo consultar el registro por DNS; se usaron sus instrucciones y componentes Base UI instalados.
+- No se comprobó móvil en esta tarea ni backend, permisos, datos reales, persistencia o acreditación. Los datos se reinician al recargar; los fixtures anteriores a 2023 conservan su meta ilustrativa previa. Reasignación de metas existentes y horas históricas siguen fuera de la entrega. Aceptación humana del resultado y autorización de cierre pendientes; sin sincronizar ni archivar specs.
+
 ## Commit del conjunto visual actual
 
 - Autorización humana de commit local de todos los cambios pendientes registrada en review.md, sobre main.
