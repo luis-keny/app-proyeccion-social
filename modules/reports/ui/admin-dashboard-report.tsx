@@ -9,9 +9,9 @@ import {
   CalendarDays,
   CheckCircle2,
   Clock3,
-  Eye,
   FileSpreadsheet,
   Filter,
+  GraduationCap,
   HeartHandshake,
   MapPin,
   QrCode,
@@ -73,7 +73,7 @@ export function AdminDashboardAndReport({
   const filteredStudents = useMemo(() => {
     return STUDENTS_DATA.filter((student) => {
       const matchesSearch =
-        `${student.name} ${student.studentCode} ${student.dni} ${student.faculty}`
+        `${student.name} ${student.studentCode ?? ""} ${student.dni} ${student.faculty}`
           .toLowerCase()
           .includes(searchQuery.toLowerCase());
       const matchesFaculty = selectedFaculty === "Todas" || student.faculty === selectedFaculty;
@@ -194,12 +194,12 @@ export function AdminDashboardAndReport({
             </Button>
             <div className="hidden h-5 w-px bg-border sm:block" />
             <span className="text-xs font-medium text-muted-foreground">
-              Expediente de Proyección Social · Vista de detalle por alumno
+              Expediente de Proyección Social · Detalle del participante
             </span>
           </div>
           <Badge variant="secondary" className="gap-1.5">
             <ShieldCheck className="size-3.5 text-emerald-600" />
-            Horas auditadas por QR y GPS
+            Historial de participación de ejemplo
           </Badge>
         </div>
 
@@ -216,14 +216,22 @@ export function AdminDashboardAndReport({
                 <div className="space-y-1.5">
                   <div className="flex flex-wrap items-center gap-2">
                     <h2 className="text-2xl font-bold tracking-tight">{selectedStudent.name}</h2>
-                    <Badge>{selectedStudent.faculty}</Badge>
-                    <Badge variant="outline">{selectedStudent.currentSemesterLabel}</Badge>
+                    {selectedStudent.participantType === "student" ? (
+                      <>
+                        <Badge>{selectedStudent.faculty}</Badge>
+                        <Badge variant="outline">{selectedStudent.currentSemesterLabel}</Badge>
+                      </>
+                    ) : (
+                      <Badge variant="secondary">Beneficiario externo</Badge>
+                    )}
                   </div>
                   <div className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted-foreground">
-                    <span>
-                      <strong className="font-medium text-foreground">Código:</strong>{" "}
-                      {selectedStudent.studentCode}
-                    </span>
+                    {selectedStudent.participantType === "student" && (
+                      <span>
+                        <strong className="font-medium text-foreground">Código:</strong>{" "}
+                        {selectedStudent.studentCode}
+                      </span>
+                    )}
                     <span>
                       <strong className="font-medium text-foreground">DNI:</strong>{" "}
                       {selectedStudent.dni}
@@ -484,7 +492,7 @@ export function AdminDashboardAndReport({
               Reporte General de Alumnos y Horas por Ciclo
             </CardTitle>
             <CardDescription>
-              Visualiza el nombre, código o DNI, horas totales acumuladas y el desglose dentro de cada ciclo académico (horas del ciclo, meta, número de actividades y proyecto). Haz clic en cualquier alumno o ciclo para abrir la vista de detalle.
+              Consulta las horas realizadas por ciclo y el total acumulado. Selecciona un nombre para ver el detalle.
             </CardDescription>
           </div>
         </div>
@@ -532,7 +540,7 @@ export function AdminDashboardAndReport({
           </div>
           <span>
             Mostrando <strong>{filteredStudents.length}</strong> de{" "}
-            <strong>{STUDENTS_DATA.length}</strong> alumnos registrados
+            <strong>{STUDENTS_DATA.length}</strong> participantes registrados
           </span>
         </div>
       </CardHeader>
@@ -540,193 +548,60 @@ export function AdminDashboardAndReport({
       <CardContent>
         <Table>
           <TableHeader>
-            {/* Fila superior de agrupación por Año (2 ciclos por año) */}
-            <TableRow className="bg-muted/60 text-xs">
-              <TableHead rowSpan={2} className="min-w-52 border-r align-middle">
-                Nombre del Estudiante
-              </TableHead>
-              <TableHead rowSpan={2} className="min-w-40 border-r align-middle">
-                Código / DNI
-              </TableHead>
-              <TableHead rowSpan={2} className="min-w-36 border-r align-middle">
-                Horas Totales
-              </TableHead>
-              {visibleAcademicYears.map((yearGroup) => (
-                <TableHead
-                  key={yearGroup.year}
-                  colSpan={2}
-                  className="border-r text-center font-semibold text-foreground"
-                >
-                  Año {yearGroup.year} · 2 Ciclos Académicos ({yearGroup.cycles[0]} y{" "}
-                  {yearGroup.cycles[1]})
-                </TableHead>
-              ))}
-              <TableHead rowSpan={2} className="text-right align-middle">
-                Detalle
-              </TableHead>
-            </TableRow>
-            <TableRow className="bg-muted/30">
+            <TableRow className="bg-muted/60">
+              <TableHead className="min-w-52">Nombre</TableHead>
+              <TableHead>Código / DNI</TableHead>
+              <TableHead className="text-right">Horas totales</TableHead>
               {visibleAcademicYears.flatMap((yearGroup) =>
                 yearGroup.cycles.map((cycleCode) => (
-                  <TableHead key={cycleCode} className="min-w-48 border-r">
-                    <div className="flex items-center justify-between">
-                      <span>Ciclo {cycleCode}</span>
-                      <span className="text-[11px] font-normal text-muted-foreground">
-                        Meta: 40 h
-                      </span>
-                    </div>
+                  <TableHead key={cycleCode} className="text-right">
+                    {cycleCode}
                   </TableHead>
                 ))
               )}
             </TableRow>
           </TableHeader>
-
           <TableBody>
-            {filteredStudents.map((student) => {
-              const totalHours = getStudentTotalHours(student);
-              const totalActs = getStudentTotalActivities(student);
-              const totalPct = Math.min(
-                100,
-                Math.round((totalHours / student.annualGoalHours) * 100)
-              );
-
-              return (
-                <TableRow key={student.id} className="align-top">
-                  {/* Columna 1: Nombre */}
-                  <TableCell className="border-r py-3">
-                    <div className="flex items-start gap-2.5">
-                      <Avatar className="mt-0.5 size-9">
-                        <AvatarFallback className="bg-primary/10 text-xs font-semibold text-primary">
-                          {student.initials}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="space-y-0.5 whitespace-normal">
-                        <Button variant="ghost"
-                          type="button"
-                          onClick={() => openStudentDetail(student.id, "ALL")}
-                          className="h-auto whitespace-normal text-left font-semibold text-foreground hover:text-primary hover:underline"
-                        >
-                          {student.name}
-                        </Button>
-                        <p className="text-xs text-muted-foreground">
-                          {student.faculty} · {student.currentSemesterLabel}
-                        </p>
-                        <p className="text-[11px] text-muted-foreground">{student.email}</p>
-                      </div>
-                    </div>
-                  </TableCell>
-
-                  {/* Columna 2: Código o DNI */}
-                  <TableCell className="border-r py-3">
-                    <div className="space-y-1">
-                      <div>
-                        <span className="text-[10px] font-medium uppercase text-muted-foreground">
-                          Código UPeU
-                        </span>
-                        <p className="font-mono text-xs font-semibold">
-                          {student.studentCode}
-                        </p>
-                      </div>
-                      <div>
-                        <span className="text-[10px] font-medium uppercase text-muted-foreground">
-                          DNI
-                        </span>
-                        <p className="font-mono text-xs text-muted-foreground">
-                          {student.dni}
-                        </p>
-                      </div>
-                    </div>
-                  </TableCell>
-
-                  {/* Columna 3: Horas Totales */}
-                  <TableCell className="border-r py-3">
-                    <div className="space-y-1.5">
-                      <div className="flex items-baseline justify-between gap-2">
-                        <span className="text-lg font-bold text-primary">
-                          {totalHours} h
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          / {student.annualGoalHours} h
-                        </span>
-                      </div>
-                      <Progress value={totalPct} locale="es-PE" />
-                      <div className="flex items-center justify-between text-[11px] text-muted-foreground">
-                        <span>{totalActs} asistencias</span>
-                        <span className="font-medium text-foreground">{totalPct}%</span>
-                      </div>
-                    </div>
-                  </TableCell>
-
-                  {/* Columnas de Ciclos (2 por año): muestra horas del ciclo y sus datos respectivos */}
-                  {visibleAcademicYears.flatMap((yearGroup) =>
-                    yearGroup.cycles.map((cycleCode) => {
-                      const cData = student.cycles[cycleCode];
-                      const pct = Math.min(
-                        100,
-                        Math.round((cData.hours / cData.goalHours) * 100)
-                      );
-                      return (
-                        <TableCell key={cycleCode} className="border-r py-2.5">
-                          <Button variant="ghost"
-                            type="button"
-                            onClick={() => openStudentDetail(student.id, cycleCode)}
-                            className="h-auto whitespace-normal w-full rounded-lg border bg-muted/20 p-2.5 text-left transition-colors hover:border-primary/50 hover:bg-muted/60"
-                            title={`Ver detalle de ${student.name} en el ciclo ${cycleCode}`}
-                          >
-                            <div className="flex items-center justify-between gap-2">
-                              <span className="text-sm font-bold text-foreground">
-                                {cData.hours} h{" "}
-                                <span className="text-xs font-normal text-muted-foreground">
-                                  / {cData.goalHours} h
-                                </span>
-                              </span>
-                              <Badge
-                                variant={
-                                  cData.status === "Meta cumplida"
-                                    ? "secondary"
-                                    : cData.status === "En curso"
-                                    ? "outline"
-                                    : "destructive"
-                                }
-                                className="h-4 px-1.5 text-[10px]"
-                              >
-                                {pct}%
-                              </Badge>
-                            </div>
-                            <p className="mt-1 truncate text-xs font-medium text-foreground">
-                              {cData.mainProject}
-                            </p>
-                            <div className="mt-1 flex items-center justify-between text-[11px] text-muted-foreground">
-                              <span>{cData.activitiesCount} activ.</span>
-                              <span>Últ.: {cData.lastDate}</span>
-                            </div>
-                          </Button>
-                        </TableCell>
-                      );
-                    })
-                  )}
-
-                  {/* Columna de acción: Vista de detalle */}
-                  <TableCell className="py-3 text-right">
-                    <Button
-                      size="xs"
-                      variant="outline"
-                      onClick={() => openStudentDetail(student.id, "ALL")}
-                      className="gap-1.5"
-                    >
-                      <Eye className="size-3.5" />
-                      Ver detalle
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+            {filteredStudents.map((student) => (
+              <TableRow key={student.id}>
+                <TableCell>
+                  <Button
+                    variant="ghost"
+                    type="button"
+                    onClick={() => openStudentDetail(student.id, "ALL")}
+                    className="h-auto justify-start whitespace-normal p-0 text-left font-semibold hover:text-primary hover:underline"
+                    aria-label={"Ver detalle de " + student.name + (student.participantType === "student" ? ", estudiante" : ", beneficiario externo")}
+                    title={student.participantType === "student" ? "Estudiante" : "Beneficiario externo"}
+                  >
+                    {student.participantType === "student" ? (
+                      <GraduationCap aria-hidden="true" className="size-4 shrink-0 text-sky-600 dark:text-sky-400" />
+                    ) : (
+                      <HeartHandshake aria-hidden="true" className="size-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
+                    )}
+                    {student.name}
+                  </Button>
+                </TableCell>
+                <TableCell className="font-mono text-xs">
+                  {student.participantType === "student" ? student.studentCode : student.dni}
+                </TableCell>
+                <TableCell className="text-right tabular-nums">
+                  {getStudentTotalHours(student)}/{student.annualGoalHours} h
+                </TableCell>
+                {visibleAcademicYears.flatMap((yearGroup) =>
+                  yearGroup.cycles.map((cycleCode) => (
+                    <TableCell key={cycleCode} className="text-right tabular-nums">
+                      {student.cycles[cycleCode].hours} h
+                    </TableCell>
+                  ))
+                )}
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
 
         {filteredStudents.length === 0 && (
           <div className="py-10 text-center text-sm text-muted-foreground">
-            No se encontraron alumnos con los filtros seleccionados.
+            No se encontraron participantes con los filtros seleccionados.
           </div>
         )}
       </CardContent>
@@ -740,13 +615,13 @@ export function AdminDashboardAndReport({
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Card size="sm">
             <CardHeader>
-              <CardDescription> Padrón de Estudiantes</CardDescription>
+              <CardDescription>Participantes</CardDescription>
               <CardTitle className="text-2xl">
-                {institutionalMetrics.totalStudents} alumnos
+                {institutionalMetrics.totalStudents} participantes
               </CardTitle>
             </CardHeader>
             <CardContent className="text-xs text-muted-foreground">
-              6 escuelas profesionales activas en el sistema
+              {faculties.filter((faculty) => faculty !== "Todas" && faculty !== "Personas externas").length} escuelas profesionales en los ejemplos
             </CardContent>
           </Card>
           <Card size="sm">
@@ -781,7 +656,7 @@ export function AdminDashboardAndReport({
               </CardTitle>
             </CardHeader>
             <CardContent className="text-xs text-muted-foreground">
-              100% con código QR y ubicación registrada
+              Registros de participación de ejemplo
             </CardContent>
           </Card>
         </div>
@@ -811,21 +686,21 @@ export function AdminDashboardAndReport({
           </CardHeader>
           <CardContent className="space-y-1 text-xs text-muted-foreground">
             <p className="font-medium text-emerald-700">
-              +191.5 h registradas en el ciclo actual 2026-II
+              +{institutionalMetrics.cycleStats.find((item) => item.cycle === "2026-II")?.totalHours} h registradas en el ciclo actual 2026-II
             </p>
-            <p>Suma global de todos los estudiantes (2025-I a 2026-II)</p>
+            <p>Suma global de todos los participantes (2025-I a 2026-II)</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-2">
             <CardDescription className="flex items-center justify-between">
-              <span>ESTUDIANTES EN PROYECCIÓN SOCIAL</span>
+              <span>PARTICIPANTES EN PROYECCIÓN SOCIAL</span>
               <Users className="size-4 text-primary" />
             </CardDescription>
             <CardTitle className="text-3xl font-bold">
               {institutionalMetrics.totalStudents}{" "}
-              <span className="text-base font-normal text-muted-foreground">alumnos</span>
+              <span className="text-base font-normal text-muted-foreground">participantes</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-1 text-xs text-muted-foreground">
@@ -837,7 +712,7 @@ export function AdminDashboardAndReport({
               ).toFixed(1)}{" "}
               h / alumno
             </p>
-            <p>100% con expediente activo en 6 escuelas</p>
+            <p>Estudiantes y beneficiarios externos de ejemplo</p>
           </CardContent>
         </Card>
 
@@ -978,7 +853,7 @@ export function AdminDashboardAndReport({
                 <div>
                   <p className="text-xs text-muted-foreground">Meta cumplida (2026-II)</p>
                   <p className="text-xl font-bold text-emerald-600">
-                    {institutionalMetrics.currentCycleCompleted} alumnos
+                    {institutionalMetrics.currentCycleCompleted} participantes
                   </p>
                 </div>
                 <CheckCircle2 className="size-5 text-emerald-600" />

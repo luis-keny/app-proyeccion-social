@@ -1,5 +1,23 @@
 # Revisión humana
 
+## Commit autorizado de los ajustes visuales actuales
+
+Fuente: mensaje humano «comitea todos los cambios realizados actualmente». Autoriza un commit local de todos los cambios pendientes en main: simplificación del reporte, códigos sin sufijos, iconos por tipo, beneficiarios y voluntariados de ejemplo, retirada del área en cards y su documentación/OpenSpec. Modalidad Ship en el checkout actual. No autoriza push, despliegue ni cierre/archivo del cambio; el commit no sustituye la aceptación final del resultado.
+
+## Identificación visual y ejemplos de voluntariado
+
+Fuente: mensaje humano «no entiendo esto · EST-00482 quitalo tambien» y solicitud de datos de ejemplo de voluntariados e iconos de colores en Nombre para diferenciar estudiantes y beneficiarios. Autoriza retirar sufijos internos de los códigos, añadir dos ejemplos locales de beneficiarios con voluntariados, distinguir tipos con iconos azul/verde y adaptar su detalle y contadores sin inventar datos académicos. Modalidad Ship sobre el checkout actual, conservando los cambios previos. No autoriza backend, dependencias, commit, push ni despliegue. Resultado y cierre pendientes de aceptación.
+
+## Retirada de área en cards de actividades
+
+Fuente: mensaje humano que pide quitar «Comunidad · Servicio» de las cards porque no aparece en el input y por ahora resulta innecesario. Autoriza retirar la etiqueta de área de las cards compartidas, actualizar documentación y verificar localmente en modalidad Ship, en el checkout actual. Se preservan los cambios pendientes del reporte. Aceptación del resultado y cierre pendientes; no autoriza commit, push ni despliegue.
+
+## Simplificación autorizada del reporte administrativo
+
+Fuente: mensaje humano que pide simplificar la tabla, retirar la acción de detalle duplicada porque ya existe en el nombre, no añadir padding al nombre, omitir carrera/ciclo/correo, mostrar código para estudiantes o DNI para beneficiarios externos, conservar realizadas/totales, limitar cada ciclo a horas realizadas y mantener los filtros propuestos.
+
+Autoriza este ajuste visual local, su modelo de presentación, documentación y comprobaciones en modalidad Ship en el checkout actual. Se conservan los ejemplos existentes de estudiantes; admitir el identificador externo en la presentación no autoriza backend ni acceso de personas externas. Aceptación del resultado y cierre pendientes; sin autorización nueva de commit, push, PR ni despliegue.
+
 ## Alcance aceptado y autorizado
 
 Fuente: mensaje humano de esta conversación: «primero lo manejaremos de manera visual los modulos y acciones que tendra cada rol» y «comenzamos a separar por componentes y vistas y modulos».

@@ -49,6 +49,12 @@ Crear/editar una actividad abre el drawer derecho; guardar actualiza los datos d
 
 Las cards de consulta, indicadores y detalles siguen siendo válidas. El mapa es un selector de ubicación dentro del formulario; cámara y QR siguen sujetos a las decisiones funcionales pendientes en [OpenSpec](../openspec/changes/establecer-bases/questions.md).
 
+## Reporte administrativo simplificado
+
+La tabla muestra nombre, un solo identificador (código para estudiante o DNI para beneficiario externo), horas realizadas/horas totales y únicamente horas realizadas por ciclo. El nombre abre el detalle mediante el botón compartido sin padding adicional; no hay columna ni botón separado de detalle. Se omiten avatar, carrera, ciclo actual, correo, barras, porcentajes, asistencias, metas y proyectos por ciclo. Los filtros de búsqueda, escuela, año y estado se conservan. El total acumulado mantiene todos los ciclos aunque el filtro de año cambie las columnas visibles.
+
+El nombre incluye un birrete azul para estudiantes o un icono de voluntariado verde para beneficiarios externos, con etiqueta accesible que identifica el tipo sin depender del color. El código universitario se muestra solo, sin sufijos internos como `EST-00482`. Los ejemplos incluyen seis estudiantes y dos beneficiarios externos con DNI ficticios e historial de voluntariados; las horas del historial coinciden con sus resúmenes por ciclo. El filtro de escuela incluye Personas externas y los contadores globales se expresan como participantes, sin contar ese grupo como escuela. El detalle externo muestra DNI sin código ni datos académicos. Esta presentación no incorpora cuentas externas, permisos ni persistencia.
+
 ## Programación y validación visual de horas
 
 El drawer ordena nombre, descripción, lugar y mapa; después presenta Programación y Validación de horas con encabezados de fondo tenue, icono y mayor separación. Se usan etiquetas breves, campos relacionados en dos columnas y un resumen de una línea. Nombre, descripción y lugar son obligatorios. La descripción se conserva al editar y se muestra en la card.
@@ -69,7 +75,9 @@ Los drawers animan panel y fondo: entrada de 360 ms y salida de 240 ms mediante 
 
 ## Cards y detalle de actividades
 
-Las cards priorizan nombre, área, descripción de hasta dos líneas, lugar, próxima jornada con horario, recurrencia y condición breve de horas. El distintivo diferencia horas totales de horas por asistencia; las series abiertas no muestran máximos calculados sobre una muestra. La próxima jornada se calcula en hora de Lima con la referencia del render de la página, incluye una jornada de hoy hasta su hora de fin y excluye las que ya terminaron. No es un reloj en tiempo real. Si la programación finita terminó, se indica que no hay jornadas pendientes. Un dato sin programación conserva su fecha textual y no recibe una regla inventada.
+Las cards omiten la etiqueta de área de los datos de ejemplo (como «Comunidad · Servicio»), porque no se recoge en el formulario actual.
+
+Las cards priorizan nombre, descripción de hasta dos líneas, lugar, próxima jornada con horario, recurrencia y condición breve de horas. El distintivo diferencia horas totales de horas por asistencia; las series abiertas no muestran máximos calculados sobre una muestra. La próxima jornada se calcula en hora de Lima con la referencia del render de la página, incluye una jornada de hoy hasta su hora de fin y excluye las que ya terminaron. No es un reloj en tiempo real. Si la programación finita terminó, se indica que no hay jornadas pendientes. Un dato sin programación conserva su fecha textual y no recibe una regla inventada.
 
 Cada card ofrece Ver detalles mediante enlace a `/workspace/[role]/actividades/[activityId]`. Esta página de consulta está disponible para los tres roles y muestra descripción completa, regla de repetición, inicio, terminación, horario, jornadas y condición de horas. Inicialmente presenta hasta seis fechas: en series finitas se pueden expandir todas; en abiertas se identifica explícitamente como muestra inicial, nunca como total. La navegación mantiene Actividades activa, añade la miga Detalle y permite volver al listado o usar atrás/adelante.
 

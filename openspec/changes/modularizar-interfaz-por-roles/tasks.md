@@ -1,5 +1,42 @@
 # Trabajo de interfaz modular
 
+## Commit del conjunto visual actual
+
+- Autorización humana de commit local de todos los cambios pendientes registrada en review.md, sobre main.
+- Inventario: ocho archivos de código, documentación y OpenSpec; incluye la retirada del área de las cards junto con los cambios del reporte. Sin archivos nuevos, secretos ni dependencias.
+- Se conservan las comprobaciones ya registradas de tipos, lint, build, escenarios y navegador. Antes del commit se comprueban diff y validación OpenSpec estricta; no se modifica implementación en esta preparación. Sin push ni archivo del cambio.
+
+## Iconos y ejemplos externos en el reporte
+
+- [x] Registrar autorización humana para retirar sufijos, añadir ejemplos de voluntariados y distinguir tipos con iconos.
+- [x] Limpiar los seis códigos universitarios; añadir dos beneficiarios con DNI ficticio e historial coherente.
+- [x] Mostrar birrete azul y voluntariado verde con nombre accesible del tipo; mantener el botón sin padding adicional.
+- [x] Adaptar detalle externo, contadores y opción Personas externas; actualizar docs y specs.
+- [x] Verificar render, coherencia de ejemplos, tipos, lint, build, OpenSpec y navegador.
+
+### Evidencia de iconos y ejemplos
+
+- Build Webpack: salida 0, incluida comprobación TypeScript. Posteriormente se ajustaron textos para identificar participantes y no atribuir GPS a los ejemplos externos. Lint de reportes: sin errores ni advertencias; comprobación final de tipos y lint tras esos textos, salida 0.
+- Escenarios en memoria sobre fixtures y componente real: seis códigos contienen solo dígitos, dos beneficiarios tienen código nulo y DNI; sus ocho resúmenes coinciden con horas y cantidad de registros del historial. Render sin sufijos EST y con iconos de ambos colores y DNI externos.
+- Navegador: ocho filas, seis birretes azules y dos iconos verdes, códigos limpios y DNI externos. Personas externas filtra dos filas. Elena abre su detalle con DNI, etiqueta Beneficiario externo, cuatro voluntariados y 46 h, sin código vacío ni escuela/ciclo actual. Recarga restablece filtros. Captura final de escritorio revisada con las ocho filas visibles.
+- OpenSpec estricto: dos cambios válidos tras separar requisitos extensos. `git diff --check`: correcto. No se añaden dependencias ni se modifican datos reales. Se preservan los cambios previos de actividades y reportes. Móvil no comprobado en esta iteración; resultado y cierre pendientes de aceptación humana, sin commit ni push.
+
+## Simplificación del reporte administrativo
+
+- [x] Registrar la petición humana, alcance autorizado y diseño compacto.
+- [x] Retirar información secundaria y detalle duplicado; conservar apertura desde el nombre sin padding, realizadas/totales y horas por ciclo.
+- [x] Mostrar un identificador según tipo de participante y conservar los filtros existentes.
+- [x] Actualizar documentación, delta spec y verificar código y flujo.
+
+### Evidencia de simplificación
+
+- Build: `node node_modules/next/dist/bin/next build --webpack`, salida 0; incluye compilación, TypeScript y generación de páginas.
+- Lint completo: sin errores, cuatro advertencias previas de plantillas de skills y mapa, más un import Eye que se retiró al simplificar la tabla. Lint posterior de `modules/reports`: salida 0 sin advertencias.
+- Render del componente real mediante transpilación TypeScript en memoria y `renderToStaticMarkup`: estudiante muestra código y oculta DNI; al sustituir temporalmente un registro en memoria por beneficiario sin código, muestra DNI y oculta código. Sin correo ni acción de detalle duplicada en la tabla. No se cambiaron fixtures en disco para esta comprobación.
+- Navegador local: tabla de siete columnas con cuatro ciclos, sin datos secundarios; nombre abre el detalle y Volver restaura el listado. Estado Observado muestra una fila. Año 2026 oculta las columnas de 2025 y mantiene 148.5/160 h del primer registro. Se restablecieron Todos y ambos años. Captura de escritorio revisada: nombre alineado sin padding adicional.
+- OpenSpec: `validate --all --strict`, dos cambios válidos; `git diff --check`, correcto. CLI shadcn docs falló por DNS; se consultaron las páginas oficiales de Button/Table y las primitivas instaladas. Se usó Node del runtime de Codex porque el shim nvm no tenía versión activa.
+- No se verificó este ajuste en móvil ni con backend; los ejemplos actuales siguen siendo estudiantes. Durante la verificación apareció un cambio ajeno en `modules/activities/ui/activity-card.tsx`, que se preservó. Sin commit, push ni cierre; aceptación del resultado pendiente.
+
 ## Implementación
 
 - [x] 1.1 Documentar reglas de diseño, alcance visual y matriz de roles.
@@ -16,7 +53,14 @@
 - [x] 3.4 Presentar navegación, etiquetas accesibles, páginas y errores en español.
 - [x] 3.5 Comprobar enlaces directos, atrás/adelante, cambio de rol, CRUD entre páginas y layout responsive; ejecutar checks.
 
-## Aceptación
+## Retirada de área en cards
+
+- [x] Retirar la etiqueta de área del componente compartido de cards y su import/desestructuración sin uso; actualizar docs/design.md, diseño, spec y autorización del cambio.
+- [x] Verificar ESLint del componente y TypeScript: salida 0, con el runtime Node explícito porque el shim de nvm no tiene versión activa.
+- [x] Build Webpack: salida 0, rutas existentes conservadas. El primer intento falló por EPERM durante prerender dentro del sandbox; repetición fuera del sandbox autorizada por el revisor automático completada.
+- [x] OpenSpec estricto: dos cambios válidos, cero fallos. Diff sin errores de espacios. Inspección del componente confirma ausencia del área para todos los roles; sin prueba de navegador en esta tarea. No se añadieron enlaces documentales ni dependencias; se preservan cambios previos del reporte. Aceptación del resultado y cierre pendientes.
+
+## Aceptación humana pendiente
 
 - [ ] 2.1 Obtener aceptación humana del resultado.
 - [ ] 2.2 Consolidar y archivar solo con cierre autorizado.

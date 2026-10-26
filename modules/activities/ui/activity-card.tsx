@@ -4,7 +4,7 @@ import { ArrowRight, CalendarDays, MapPin, Pencil, Repeat2, Trash2 } from "lucid
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonLink } from "@/components/ui/button-link";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Role } from "@/modules/portal/navigation";
 import type { SocialActivity } from "../model";
 import { creditSummary } from "../scheduling";
@@ -18,7 +18,7 @@ type Props = {
 };
 
 export function ActivityCard({ activity, role, detailsHref, referenceTime, onEdit, onDelete, onBeginAttendance }: Props) {
-  const { title, area, place, icon: Icon, schedule, credit } = activity;
+  const { title, place, icon: Icon, schedule, credit } = activity;
   const nextDate = schedule ? nextActivityDate(schedule, referenceTime) : null;
   const openEnded = schedule?.repeat !== "once" && schedule?.endMode === "never";
   const hoursLabel = credit ? `${credit.hours} h ${credit.rule === "per-attendance" ? "/ asistencia" : "en total"}` : activity.hours;
@@ -35,7 +35,6 @@ export function ActivityCard({ activity, role, detailsHref, referenceTime, onEdi
         </div>
       </div>
       <CardTitle className="line-clamp-2">{title}</CardTitle>
-      <CardDescription>{area}</CardDescription>
       {activity.description && <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{activity.description}</p>}
     </CardHeader>
     <CardContent className="flex flex-1 flex-col gap-3 text-sm">

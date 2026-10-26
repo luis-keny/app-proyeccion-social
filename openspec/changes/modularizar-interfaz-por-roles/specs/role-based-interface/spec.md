@@ -1,5 +1,42 @@
 ## ADDED Requirements
 
+### Requirement: Reporte administrativo compacto
+
+La tabla administrativa SHALL mostrar nombre, código para estudiantes o DNI para beneficiarios externos, horas realizadas/horas totales y únicamente horas realizadas por ciclo. SHALL omitir carrera, ciclo actual, correo y métricas auxiliares por ciclo. El nombre SHALL abrir el detalle sin padding adicional en el botón y sin columna ni acción separada de detalle. SHALL conservar los filtros existentes de búsqueda, escuela, año y estado.
+
+#### Scenario: Consultar horas y abrir detalle
+
+- **WHEN** el administrador consulta la tabla y selecciona un nombre
+- **THEN** ve solo las columnas resumidas y abre el detalle existente de esa persona
+
+#### Scenario: Identificador de participante
+
+- **WHEN** se presenta un estudiante o un beneficiario externo
+- **THEN** su celda muestra respectivamente código universitario o DNI, sin mostrar ambos identificadores
+
+#### Scenario: Filtrar columnas por año
+
+- **WHEN** se elige un año en el filtro existente
+- **THEN** solo se muestran sus ciclos con horas realizadas y el acumulado sigue incluyendo todos los ciclos
+
+### Requirement: Identificación visual de participantes
+
+El reporte SHALL mostrar códigos universitarios sin sufijos internos. Nombre SHALL incluir un birrete azul para estudiante o un icono de voluntariado verde para beneficiario externo, con identificación accesible del tipo.
+
+#### Scenario: Identificar estudiantes
+
+- **WHEN** se consulta una fila de estudiante
+- **THEN** el nombre tiene birrete azul e identificación accesible y el código no incluye un sufijo EST
+
+### Requirement: Voluntariados externos de ejemplo
+
+Los datos de ejemplo SHALL incluir beneficiarios con DNI ficticio e historial de voluntariados coherente con las horas por ciclo. El detalle externo MUST NOT mostrar código vacío ni datos académicos inventados. Los filtros SHALL permitir consultar Personas externas; los contadores SHALL incluir ambos tipos como participantes sin contar el grupo externo como escuela.
+
+#### Scenario: Consultar beneficiarios de ejemplo
+
+- **WHEN** se filtra Personas externas y se abre el nombre de un beneficiario
+- **THEN** aparece su icono verde, DNI e historial de voluntariados con horas coincidentes con sus ciclos y sin código universitario
+
 ### Requirement: Navegación visual por rol
 
 El portal SHALL mostrar las vistas existentes según el rol seleccionado: progreso, actividades y QR para estudiante; además registro de asistencia para asistente; resumen general, reporte, actividades y registro para administrador. Este selector SHALL identificarse como una herramienta de revisión visual, sin representar autenticación efectiva.
@@ -158,12 +195,17 @@ La configuración MUST NOT acreditar horas reales ni modificar progreso, reporte
 
 ### Requirement: Cards de participación resumidas
 
-Las cards SHALL mostrar nombre, área, descripción de hasta dos líneas, lugar, próxima jornada/horario, recurrencia y condición breve de horas. El distintivo SHALL diferenciar valor por asistencia de total condicionado. Las series abiertas MUST NOT mostrar un máximo basado en su muestra. Todas SHALL ofrecer un enlace Ver detalles.
+Las cards SHALL mostrar nombre, descripción de hasta dos líneas, lugar, próxima jornada/horario, recurrencia y condición breve de horas. El distintivo SHALL diferenciar valor por asistencia de total condicionado. Las series abiertas MUST NOT mostrar un máximo basado en su muestra. Todas SHALL ofrecer un enlace Ver detalles.
 
 #### Scenario: Consultar la condición antes de participar
 
 - **WHEN** se muestra una actividad de cinco jornadas que exige tres asistencias
 - **THEN** la card resume esa condición y sus horas sin desplegar la programación completa
+
+#### Scenario: Omitir área sin campo de edición
+
+- **WHEN** se presenta una card de actividad para cualquier rol
+- **THEN** no muestra la etiqueta de área de los datos de ejemplo, como «Comunidad · Servicio»
 
 ### Requirement: Próxima jornada en hora de Lima
 

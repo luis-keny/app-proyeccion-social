@@ -8,6 +8,10 @@ La demo concentra estado, navegación y vistas en `social-projection-dashboard.t
 
 Organizar la primera etapa visual de la aplicación y aplicar las reglas humanas de interacción. No implementar todavía persistencia, permisos efectivos ni reglas institucionales pendientes.
 
+## Reporte administrativo simplificado
+
+Tabla compacta con nombre como única apertura del detalle y botón compartido sin padding adicional. Identificador según tipo explícito del participante visual: código de estudiante sin sufijos internos o DNI de beneficiario externo. Birrete azul e icono de voluntariado verde distinguen tipos con etiquetas accesibles. Horas acumuladas realizadas/totales y una celda de horas realizadas por ciclo, con encabezado único. Se retiran avatar, información académica/contacto, métricas auxiliares y columna de detalle. Se conservan búsqueda, escuela, año y estado; Personas externas permite filtrar beneficiarios sin contarlos como escuela. Dos ejemplos externos tienen historial coherente de voluntariados, DNI ficticios y detalle sin campos académicos ni código vacío. Los contadores incluyen ambos tipos como participantes. El tipo externo no define autenticación ni reglas de acreditación.
+
 ## Decisions
 
 - El portal compone vistas; cada capacidad reúne sus componentes en `modules/<capacidad>/ui`. Datos de ejemplo y tipos se separan de la presentación.
@@ -47,6 +51,8 @@ Horas por asistencia o total de bloque condicionado a mínimo/completo. Asistenc
 Usar transiciones de Base UI, duración CSS compartida y movimiento reducido. Montar raíz cerrada, abrir y desmontar solo al completar la salida, sin temporizadores de cierre.
 
 ## Cards y consulta de actividad
+
+Omitir en las cards la etiqueta de área procedente de fixtures: no corresponde a un campo del editor actual. Conservar el resto de la información y acciones.
 
 Crear `/workspace/[role]/actividades/[activityId]` con parámetros asíncronos y un componente cliente que resuelve por ID desde el proveedor. Centralizar URLs en navegación y formato de programación en presentation.ts. La referencia temporal del servidor evita diferencias de hidratación; la siguiente jornada se evalúa en Lima y para series abiertas se busca en la regla, incluso fuera de la muestra inicial.
 

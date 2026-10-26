@@ -30,7 +30,6 @@ export type StudentReportItem = {
   id: string;
   name: string;
   initials: string;
-  studentCode: string;
   dni: string;
   faculty: string;
   email: string;
@@ -38,7 +37,10 @@ export type StudentReportItem = {
   annualGoalHours: number;
   cycles: Record<CycleCode, CycleSummary>;
   activities: StudentActivityLog[];
-};
+} & (
+  | { participantType: "student"; studentCode: string }
+  | { participantType: "beneficiary"; studentCode: null }
+);
 
 export const ACADEMIC_YEARS: { year: "2025" | "2026"; label: string; cycles: [CycleCode, CycleCode] }[] = [
   { year: "2025", label: "Año Académico 2025 (2 ciclos)", cycles: ["2025-I", "2025-II"] },
@@ -52,7 +54,8 @@ export const STUDENTS_DATA: StudentReportItem[] = [
     id: "est-1",
     name: "Daniela Rojas Quispe",
     initials: "DR",
-    studentCode: "202310482 · EST-00482",
+    participantType: "student",
+    studentCode: "202310482",
     dni: "74829103",
     faculty: "Psicología",
     email: "daniela.rojas@upeu.edu.pe",
@@ -241,7 +244,8 @@ export const STUDENTS_DATA: StudentReportItem[] = [
     id: "est-2",
     name: "Mateo Valdivia Huamán",
     initials: "MV",
-    studentCode: "202210894 · EST-00894",
+    participantType: "student",
+    studentCode: "202210894",
     dni: "72910485",
     faculty: "Ingeniería de Sistemas",
     email: "mateo.valdivia@upeu.edu.pe",
@@ -378,7 +382,8 @@ export const STUDENTS_DATA: StudentReportItem[] = [
     id: "est-3",
     name: "Camila Paredes Tello",
     initials: "CP",
-    studentCode: "202320115 · EST-00115",
+    participantType: "student",
+    studentCode: "202320115",
     dni: "75103948",
     faculty: "Medicina Humana",
     email: "camila.paredes@upeu.edu.pe",
@@ -515,7 +520,8 @@ export const STUDENTS_DATA: StudentReportItem[] = [
     id: "est-4",
     name: "Sebastián Mendoza Flores",
     initials: "SM",
-    studentCode: "202410309 · EST-00309",
+    participantType: "student",
+    studentCode: "202410309",
     dni: "76482019",
     faculty: "Administración y Negocios",
     email: "sebastian.mendoza@upeu.edu.pe",
@@ -639,7 +645,8 @@ export const STUDENTS_DATA: StudentReportItem[] = [
     id: "est-5",
     name: "Lucía Fernández Ríos",
     initials: "LF",
-    studentCode: "202220512 · EST-00512",
+    participantType: "student",
+    studentCode: "202220512",
     dni: "71839204",
     faculty: "Arquitectura y Urbanismo",
     email: "lucia.fernandez@upeu.edu.pe",
@@ -776,7 +783,8 @@ export const STUDENTS_DATA: StudentReportItem[] = [
     id: "est-6",
     name: "Diego Quispe Condori",
     initials: "DQ",
-    studentCode: "202310771 · EST-00771",
+    participantType: "student",
+    studentCode: "202310771",
     dni: "73920184",
     faculty: "Enfermería",
     email: "diego.quispe@upeu.edu.pe",
@@ -910,3 +918,60 @@ export const STUDENTS_DATA: StudentReportItem[] = [
     ],
   },
 ];
+
+// Participantes e historial ficticios para revisar voluntariado externo.
+const EXAMPLE_CYCLE_GOAL_HOURS = 40;
+
+function createBeneficiaryExample(
+  identity: Pick<StudentReportItem, "id" | "name" | "initials" | "dni" | "email">,
+  projects: [string, string, string, string],
+  hours: [number, number, number, number],
+): StudentReportItem {
+  const summaries = ALL_CYCLES.map((cycle, index): CycleSummary => ({
+    cycle,
+    year: cycle.startsWith("2025") ? "2025" : "2026",
+    semester: cycle.endsWith("-I") ? "Ciclo I" : "Ciclo II",
+    hours: hours[index],
+    goalHours: EXAMPLE_CYCLE_GOAL_HOURS,
+    activitiesCount: 1,
+    mainProject: projects[index],
+    lastDate: cycle.endsWith("-I") ? "20 jun " + cycle.slice(0, 4) : "17 oct " + cycle.slice(0, 4),
+    status: "En curso",
+  }));
+
+  return {
+    ...identity,
+    participantType: "beneficiary",
+    studentCode: null,
+    faculty: "Personas externas",
+    currentSemesterLabel: "",
+    annualGoalHours: EXAMPLE_CYCLE_GOAL_HOURS * ALL_CYCLES.length,
+    cycles: Object.fromEntries(summaries.map((summary) => [summary.cycle, summary])) as Record<CycleCode, CycleSummary>,
+    activities: summaries.map((summary): StudentActivityLog => ({
+      id: identity.id + "-" + summary.cycle,
+      cycle: summary.cycle,
+      title: summary.mainProject,
+      area: "Comunidad y Servicio",
+      place: "Centro comunitario de ejemplo",
+      date: summary.lastDate,
+      schedule: "Jornadas de voluntariado acumuladas",
+      hours: summary.hours,
+      supervisor: "Coordinación de voluntariado (ejemplo)",
+      validationMethod: "QR Presencial",
+      status: "Validado",
+    })),
+  };
+}
+
+STUDENTS_DATA.push(
+  createBeneficiaryExample(
+    { id: "ben-1", name: "Elena Torres Salas", initials: "ET", dni: "00000001", email: "elena@example.invalid" },
+    ["Voluntariado en comedor comunitario", "Campaña de abrigo solidario", "Huerto vecinal", "Banco de alimentos"],
+    [8, 12, 10, 16],
+  ),
+  createBeneficiaryExample(
+    { id: "ben-2", name: "Raúl Medina Soto", initials: "RM", dni: "00000002", email: "raul@example.invalid" },
+    ["Limpieza de espacios públicos", "Recolección de donaciones", "Acompañamiento a adultos mayores", "Jornada de lectura comunitaria"],
+    [6, 8, 12, 10],
+  ),
+);
