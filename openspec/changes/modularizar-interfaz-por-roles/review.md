@@ -59,3 +59,11 @@ Esta conformidad no autoriza cierre/archivo del cambio completo ni commit, push,
 ## Autorización de commit del conjunto actual
 
 Fuente: mensaje humano «comitea todo» después de la entrega de cards y detalle. Autoriza crear un commit local con todos los cambios pendientes del checkout actual en main, incluidos programación, horas, mapa, transiciones de drawers, cards, detalle, documentación y OpenSpec. Mantiene la modalidad Show y no requiere crear una rama. No autoriza push, despliegue ni cierre/archivo del cambio; no se interpreta el commit como aceptación final de todos los resultados.
+
+## Limpieza de reporte y detalle de participantes
+
+Fuente: comentarios humanos sobre retirar los indicadores superiores y el resumen por ciclo, y petición directa de cambiar título/descripción general, quitar la cabecera de reporte consolidado y la columna de eje de impacto del detalle porque no existe. Autoriza implementar y verificar esta limpieza visual local y actualizar documentación y delta spec. Modalidad Ship en el checkout actual, inicialmente limpio. Se conservan filtros, ficha e historial. Sin backend, dependencias, commit, push ni despliegue. Aceptación del resultado y cierre pendientes.
+
+## Commit autorizado de la limpieza de reportes
+
+Fuente: mensaje humano «comitea todo» después de la entrega de limpieza del reporte y detalle. Autoriza crear un commit local de todos los cambios pendientes en main, incluidos código, docs y OpenSpec. Modalidad Ship en el checkout actual. No autoriza push, despliegue ni cierre/archivo; la aceptación final del resultado continúa pendiente.

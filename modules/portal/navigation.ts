@@ -7,7 +7,7 @@ export type WorkspaceView = "overview" | "reports" | "progress" | "activities" |
 type ViewDefinition = { id: WorkspaceView; segment: string; label: string; title: string; description: string; icon: LucideIcon; roles: readonly RoleSlug[] };
 export const navigation: readonly ViewDefinition[] = [
   { id: "overview", segment: "resumen", label: "Resumen general", title: "Resumen de proyección social", description: "Consulta los indicadores y el avance de los estudiantes por ciclo académico.", icon: LayoutDashboard, roles: ["administrador"] },
-  { id: "reports", segment: "reportes", label: "Reporte de alumnos", title: "Horas por estudiante y ciclo", description: "Explora las horas acumuladas y el detalle de cada estudiante.", icon: FileSpreadsheet, roles: ["administrador"] },
+  { id: "reports", segment: "reportes", label: "Reporte de alumnos", title: "Reporte de alumnos", description: "Consulta las horas por ciclo y el total acumulado. Selecciona un nombre para ver su detalle.", icon: FileSpreadsheet, roles: ["administrador"] },
   { id: "progress", segment: "progreso", label: "Mi progreso", title: "Mis horas de proyección social", description: "Revisa tus horas y encuentra tu próxima actividad.", icon: Gauge, roles: ["estudiante", "asistente"] },
   { id: "activities", segment: "actividades", label: "Actividades", title: "Actividades de proyección social", description: "Encuentra dónde compartir tus talentos.", icon: Compass, roles: ["estudiante", "asistente", "administrador"] },
   { id: "qr", segment: "mi-qr", label: "Mi QR", title: "Mi código QR", description: "Muestra tu código al asistente para registrar tu participación.", icon: QrCode, roles: ["estudiante", "asistente"] },

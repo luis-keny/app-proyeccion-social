@@ -158,3 +158,22 @@
 - Mensaje humano «comitea todo»: alcance de commit local del conjunto pendiente registrado en review.md, sobre main y sin push.
 - Inventario revisado: código, documentación y OpenSpec de las entregas visuales de esta conversación; se incluyen los archivos nuevos de programación, presentación, horarios y detalle. No se incluyen archivos de entorno ni dependencias.
 - Se conservan las comprobaciones de tipos, lint, build y flujos ya registradas; no se modificó implementación después de esas comprobaciones. Validación OpenSpec y diff se comprueban de nuevo al preparar el commit. El commit no consolida ni archiva specs.
+
+## Limpieza de reporte y detalle
+
+- [x] Registrar petición y autorización visual local en review.md.
+- [x] Actualizar título/descripción general y retirar indicadores y cabecera redundante de la tabla.
+- [x] Retirar resumen anual/por ciclo y columna Eje de impacto del detalle, conservando filtros del historial.
+- [x] Actualizar docs/design.md, propuesta, diseño y delta spec; verificar interfaz y código.
+
+### Evidencia de limpieza
+
+- Lint completo: salida 0, sin errores; cuatro advertencias previas en plantillas de skills y tiles del mapa.
+- TypeScript: `tsc --noEmit`, salida 0. Build: `next build --webpack`, salida 0, compilación, tipos y generación de páginas completos. Primer intento dentro del sandbox bloqueado por EPERM en .next; repetición fuera del sandbox autorizada por el revisor automático completada sin cambiar configuración.
+- OpenSpec: `validate --all --strict`, dos cambios válidos y cero fallos. Se ejecutó la CLI instalada con Node explícito porque el shim nvm no tiene versión activa.
+- Navegador local: título/descripción actualizados; tabla de ocho participantes con filtros, sin indicadores superiores ni cabecera consolidada. Nombre abre ficha e historial de cinco columnas, sin resumen anual/por ciclo ni Eje de impacto. Filtro 2025-I muestra la única actividad correspondiente; Todos restaura las diez filas y Volver restaura el listado. Capturas de escritorio de reporte y detalle inspeccionadas visualmente.
+- No se probó móvil en esta tarea ni backend/persistencia. Se conservan los datos de ejemplo y los indicadores del módulo Resumen general. Documentación de diseño actualizada; sin enlaces nuevos. Sin commit, push ni cierre; aceptación humana del resultado pendiente.
+
+### Commit de la limpieza
+
+- Autorización humana de commit local registrada en review.md. Inventario: ocho archivos de código, diseño y OpenSpec correspondientes a la limpieza entregada, sin archivos de entorno ni dependencias. Se conservan las verificaciones de implementación anteriores; solo se añade el registro documental de esta autorización. El commit no consolida ni archiva specs.

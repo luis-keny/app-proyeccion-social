@@ -19,6 +19,20 @@ La tabla administrativa SHALL mostrar nombre, código para estudiantes o DNI par
 - **WHEN** se elige un año en el filtro existente
 - **THEN** solo se muestran sus ciclos con horas realizadas y el acumulado sigue incluyendo todos los ciclos
 
+### Requirement: Reporte y detalle sin bloques redundantes
+
+La vista Reporte de alumnos SHALL mostrar un único título general y una descripción breve que explique horas por ciclo, total acumulado y apertura del detalle. SHALL omitir las cards de indicadores superiores y la cabecera de reporte consolidado dentro de la card de filtros y tabla. El detalle SHALL conservar ficha e historial con filtros por ciclo y SHALL omitir el resumen anual/por ciclo y la columna Eje de impacto.
+
+#### Scenario: Consultar el reporte simplificado
+
+- **WHEN** se abre Reporte de alumnos
+- **THEN** el encabezado general precede a filtros y tabla, sin indicadores ni cabecera repetida dentro de la card
+
+#### Scenario: Consultar historial por ciclo
+
+- **WHEN** se abre un participante y se selecciona un ciclo del historial
+- **THEN** se muestran sus actividades de ese ciclo sin resumen anual/por ciclo ni columna Eje de impacto; Todos restaura el historial completo
+
 ### Requirement: Identificación visual de participantes
 
 El reporte SHALL mostrar códigos universitarios sin sufijos internos. Nombre SHALL incluir un birrete azul para estudiante o un icono de voluntariado verde para beneficiario externo, con identificación accesible del tipo.

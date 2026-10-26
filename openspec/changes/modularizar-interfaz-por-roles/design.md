@@ -10,6 +10,8 @@ Organizar la primera etapa visual de la aplicación y aplicar las reglas humanas
 
 ## Reporte administrativo simplificado
 
+La vista Reporte de alumnos presenta un único título general y una descripción breve sobre horas por ciclo, acumulado y apertura del detalle por nombre. La card comienza en los filtros: no repite título, distintivo ni descripción de reporte consolidado. Se omiten las cuatro cards de indicadores superiores. El detalle conserva la ficha del participante y el historial filtrable por ciclo, sin el bloque de resumen anual/por ciclo ni la columna Eje de impacto.
+
 Tabla compacta con nombre como única apertura del detalle y botón compartido sin padding adicional. Identificador según tipo explícito del participante visual: código de estudiante sin sufijos internos o DNI de beneficiario externo. Birrete azul e icono de voluntariado verde distinguen tipos con etiquetas accesibles. Horas acumuladas realizadas/totales y una celda de horas realizadas por ciclo, con encabezado único. Se retiran avatar, información académica/contacto, métricas auxiliares y columna de detalle. Se conservan búsqueda, escuela, año y estado; Personas externas permite filtrar beneficiarios sin contarlos como escuela. Dos ejemplos externos tienen historial coherente de voluntariados, DNI ficticios y detalle sin campos académicos ni código vacío. Los contadores incluyen ambos tipos como participantes. El tipo externo no define autenticación ni reglas de acreditación.
 
 ## Decisions

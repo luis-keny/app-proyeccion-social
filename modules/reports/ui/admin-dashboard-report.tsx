@@ -9,7 +9,6 @@ import {
   CalendarDays,
   CheckCircle2,
   Clock3,
-  FileSpreadsheet,
   Filter,
   GraduationCap,
   HeartHandshake,
@@ -267,117 +266,6 @@ export function AdminDashboardAndReport({
           </CardContent>
         </Card>
 
-        {/* Desglose por Año y sus 2 Ciclos Académicos */}
-        <div className="space-y-3">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <div>
-              <h3 className="text-lg font-semibold">
-                Resumen por Ciclo Académico (2 ciclos por año)
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                Selecciona cualquier ciclo para filtrar las actividades y horas realizadas en ese semestre.
-              </p>
-            </div>
-            {detailCycleFilter !== "ALL" && (
-              <Button variant="ghost" size="sm" onClick={() => setDetailCycleFilter("ALL")}>
-                Mostrar todos los ciclos ({ALL_CYCLES.length})
-              </Button>
-            )}
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-2">
-            {ACADEMIC_YEARS.map((yearGroup) => {
-              const yearHours = yearGroup.cycles.reduce(
-                (acc, c) => acc + selectedStudent.cycles[c].hours,
-                0
-              );
-              const yearGoal = yearGroup.cycles.reduce(
-                (acc, c) => acc + selectedStudent.cycles[c].goalHours,
-                0
-              );
-              return (
-                <Card key={yearGroup.year}>
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <CardDescription className="text-xs font-semibold uppercase tracking-wider">
-                          {yearGroup.label}
-                        </CardDescription>
-                        <CardTitle className="text-base">
-                          Total Año {yearGroup.year}: {yearHours} h{" "}
-                          <span className="text-sm font-normal text-muted-foreground">
-                            / {yearGoal} h meta anual
-                          </span>
-                        </CardTitle>
-                      </div>
-                      <Badge variant="outline">2 ciclos</Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="grid gap-3 sm:grid-cols-2">
-                    {yearGroup.cycles.map((cycleCode) => {
-                      const cData = selectedStudent.cycles[cycleCode];
-                      const pct = Math.min(100, Math.round((cData.hours / cData.goalHours) * 100));
-                      const isSelected = detailCycleFilter === cycleCode;
-                      return (
-                        <Button variant="ghost"
-                          key={cycleCode}
-                          type="button"
-                          onClick={() =>
-                            setDetailCycleFilter(isSelected ? "ALL" : cycleCode)
-                          }
-                          className={`h-auto whitespace-normal flex flex-col justify-between rounded-lg border p-3.5 text-left transition-all hover:border-primary/60 hover:bg-muted/40 ${
-                            isSelected
-                              ? "border-primary bg-primary/5 ring-2 ring-primary/20"
-                              : "bg-background"
-                          }`}
-                        >
-                          <div className="space-y-2">
-                            <div className="flex items-center justify-between gap-2">
-                              <span className="font-semibold text-sm">
-                                Ciclo {cData.cycle}
-                              </span>
-                              <Badge
-                                variant={
-                                  cData.status === "Meta cumplida"
-                                    ? "secondary"
-                                    : cData.status === "En curso"
-                                    ? "outline"
-                                    : "destructive"
-                                }
-                                className="text-[10px]"
-                              >
-                                {cData.status}
-                              </Badge>
-                            </div>
-                            <div className="flex items-baseline justify-between">
-                              <span className="text-2xl font-bold">
-                                {cData.hours} <span className="text-xs font-normal">h</span>
-                              </span>
-                              <span className="text-xs text-muted-foreground">
-                                Meta: {cData.goalHours} h ({pct}%)
-                              </span>
-                            </div>
-                            <Progress value={pct} locale="es-PE" />
-                          </div>
-                          <div className="mt-3 space-y-1 border-t pt-2.5 text-xs text-muted-foreground">
-                            <p className="truncate font-medium text-foreground">
-                              {cData.mainProject}
-                            </p>
-                            <div className="flex items-center justify-between">
-                              <span>{cData.activitiesCount} actividades</span>
-                              <span>Últ.: {cData.lastDate}</span>
-                            </div>
-                          </div>
-                        </Button>
-                      );
-                    })}
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-
         {/* Tabla de detalle de actividades y horas realizadas por el estudiante */}
         <Card>
           <CardHeader>
@@ -418,7 +306,6 @@ export function AdminDashboardAndReport({
                 <TableRow className="bg-muted/40">
                   <TableHead>Ciclo</TableHead>
                   <TableHead>Actividad / Proyecto Social</TableHead>
-                  <TableHead>Eje de Impacto</TableHead>
                   <TableHead>Lugar y Fecha</TableHead>
                   <TableHead>Supervisor / Validador</TableHead>
                   <TableHead className="text-right">Horas Acreditadas</TableHead>
@@ -435,9 +322,6 @@ export function AdminDashboardAndReport({
                     <TableCell className="max-w-xs whitespace-normal">
                       <p className="font-medium text-foreground">{log.title}</p>
                       <p className="text-xs text-muted-foreground">{log.schedule}</p>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="secondary">{log.area}</Badge>
                     </TableCell>
                     <TableCell className="whitespace-normal">
                       <p className="flex items-center gap-1 text-sm">
@@ -477,26 +361,6 @@ export function AdminDashboardAndReport({
   const studentReportSection = (
     <Card id="reporte-alumnos-card" className="border-border/80 shadow-xs">
       <CardHeader className="space-y-4">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <div className="mb-1 flex items-center gap-2">
-              <Badge variant="secondary" className="gap-1">
-                <FileSpreadsheet className="size-3.5" />
-                Reporte Consolidado
-              </Badge>
-              <span className="text-xs text-muted-foreground">
-                2 ciclos académicos por año (2025-I, 2025-II, 2026-I, 2026-II)
-              </span>
-            </div>
-            <CardTitle className="text-xl">
-              Reporte General de Alumnos y Horas por Ciclo
-            </CardTitle>
-            <CardDescription>
-              Consulta las horas realizadas por ciclo y el total acumulado. Selecciona un nombre para ver el detalle.
-            </CardDescription>
-          </div>
-        </div>
-
         {/* Barra de filtros del reporte */}
         <div className="grid gap-3 pt-1 sm:grid-cols-2 lg:grid-cols-4">
           <div className="relative sm:col-span-2">
@@ -608,62 +472,8 @@ export function AdminDashboardAndReport({
     </Card>
   );
 
-  // Si está en la pestaña exclusiva de "Reporte de alumnos", mostramos un resumen rápido y la tabla completa
   if (mode === "report") {
-    return (
-      <section className="space-y-6">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <Card size="sm">
-            <CardHeader>
-              <CardDescription>Participantes</CardDescription>
-              <CardTitle className="text-2xl">
-                {institutionalMetrics.totalStudents} participantes
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-xs text-muted-foreground">
-              {faculties.filter((faculty) => faculty !== "Todas" && faculty !== "Personas externas").length} escuelas profesionales en los ejemplos
-            </CardContent>
-          </Card>
-          <Card size="sm">
-            <CardHeader>
-              <CardDescription>Horas Acreditadas (2025–2026)</CardDescription>
-              <CardTitle className="text-2xl">
-                {institutionalMetrics.totalHoursAllCycles} h
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-xs text-muted-foreground">
-              Acumuladas en 4 ciclos (2 ciclos por año)
-            </CardContent>
-          </Card>
-          <Card size="sm">
-            <CardHeader>
-              <CardDescription>Meta Cumplida (Ciclo 2026-II)</CardDescription>
-              <CardTitle className="text-2xl text-emerald-600">
-                {institutionalMetrics.currentCycleCompleted} de{" "}
-                {institutionalMetrics.totalStudents}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-xs text-muted-foreground">
-              {institutionalMetrics.currentCycleInProgress} en curso ·{" "}
-              {institutionalMetrics.currentCycleObserved} por reforzar
-            </CardContent>
-          </Card>
-          <Card size="sm">
-            <CardHeader>
-              <CardDescription>Asistencias Verificadas</CardDescription>
-              <CardTitle className="text-2xl">
-                {institutionalMetrics.totalActivitiesAllCycles} registros
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-xs text-muted-foreground">
-              Registros de participación de ejemplo
-            </CardContent>
-          </Card>
-        </div>
-
-        {studentReportSection}
-      </section>
-    );
+    return <section className="space-y-6">{studentReportSection}</section>;
   }
 
   // ============================================================================

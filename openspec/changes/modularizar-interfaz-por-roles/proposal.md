@@ -37,3 +37,7 @@ Sin integración de calendario externo ni crédito real. Las ruedas de reloj mó
 ## Cards y detalle navegable
 
 Resumir en cards datos de participación y enlazar Ver detalles a una ruta por actividad. La nueva consulta reúne descripción completa, programación y jornadas, condición de horas y mapa de ubicación sin edición, con navegación por rol y vuelta al listado. Los ejemplos representan las tres reglas de horas. Se conserva estado en memoria y registro para roles operadores, sin inscripción, backend ni dependencias nuevas.
+
+## Limpieza del reporte y detalle
+
+La vista Reporte de alumnos presenta un único título general y una descripción breve sobre horas por ciclo, acumulado y apertura del detalle por nombre. La card comienza en los filtros: no repite título, distintivo ni descripción de reporte consolidado. Se omiten las cuatro cards de indicadores superiores. El detalle conserva la ficha del participante y el historial filtrable por ciclo, sin el bloque de resumen anual/por ciclo ni la columna Eje de impacto.
